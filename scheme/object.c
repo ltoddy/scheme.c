@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* no GC */
 Scheme_Object* Alloc_Object()
 {
     Scheme_Object* obj = malloc(sizeof(Scheme_Object));
