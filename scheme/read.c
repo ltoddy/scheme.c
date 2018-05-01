@@ -1,0 +1,71 @@
+#include "read.h"
+#include <ctype.h>
+#include <libio.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+static char Is_Delimiter(int c)
+{
+    return isspace(c) ||
+           c == EOF ||
+           c == '(' ||
+           c == ')' ||
+           c == '"' ||
+           c == ';';
+}
+
+static int Peek(FILE* in)
+{
+    int c = getc(in);
+    ungetc(c, in);
+    return c;
+}
+
+static void Skip_Whitespace(FILE* in)
+{
+    int c;
+    while ((c = getc(in)) != EOF) {
+        if (isspace(c)) {
+            continue;
+        } else if (c == ';') { /* comments are whitespace also */
+            while ((c = getc(in)) != EOF && (c != '\n'));
+            continue;
+        }
+        ungetc(c, in);
+        break;
+    }
+}
+
+Scheme_Object* Read(FILE* in)
+{
+    int c = 0;
+    short sign = 1;
+    long num = 0;
+    Skip_Whitespace(in);
+    c = getc(in);
+
+    if (isdigit(c) || (c == '-' && isdigit(Peek(in)))) {
+        /* read a fixnum */
+        if (c == '-') {
+            sign = -1;
+        } else {
+            ungetc(c, in);
+        }
+        while (isdigit(c = getc(in))) {
+            num = (num * 10) + (c - '0');
+        }
+        num *= sign;
+        if (Is_Delimiter(c)) {
+            ungetc(c, in);
+            return Make_Fixnum(num);
+        } else {
+            fprintf(stderr, "number not followed by delimiter.\n");
+            exit(1);
+        }
+    } else {
+        fprintf(stderr, "bad input. Unexpected '%c'\n", c);
+        exit(1);
+    }
+    fprintf(stderr, "read illegal state.\n");
+    exit(1);
+}
