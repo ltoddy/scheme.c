@@ -43,8 +43,18 @@ Scheme_Object* Read(FILE* in)
     long num = 0;
     Skip_Whitespace(in);
     c = getc(in);
-
-    if (isdigit(c) || (c == '-' && isdigit(Peek(in)))) {
+    if (c == '#') {
+        c = getc(in);
+        switch (c) {
+            case 't':
+                return True;
+            case 'f':
+                return False;
+            default:
+                fprintf(stderr, "unknown boolean literal\n");
+                exit(1);
+        }
+    } else if (isdigit(c) || (c == '-' && isdigit(Peek(in)))) {
         /* read a fixnum */
         if (c == '-') {
             sign = -1;
