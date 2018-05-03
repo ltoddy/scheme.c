@@ -6,7 +6,7 @@
 
 int main()
 {
-    Init_Scheme();
+    InitScheme();
 
     printf("Welcome to Scheme. Use ctrl-c to exit.\n");
 

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static char Is_Delimiter(int c)
+static char IsDelimiter(int c)
 {
     return isspace(c) ||
            c == EOF ||
@@ -21,7 +21,7 @@ static int Peek(FILE* in)
     return c;
 }
 
-static void Skip_Whitespace(FILE* in)
+static void SkipWhitespace(FILE* in)
 {
     int c;
     while ((c = getc(in)) != EOF) {
@@ -36,12 +36,12 @@ static void Skip_Whitespace(FILE* in)
     }
 }
 
-Scheme_Object* Read(FILE* in)
+SchemeObject* Read(FILE* in)
 {
     int c = 0;
     short sign = 1;
     long num = 0;
-    Skip_Whitespace(in);
+    SkipWhitespace(in);
     c = getc(in);
     if (c == '#') {
         c = getc(in);
@@ -65,9 +65,9 @@ Scheme_Object* Read(FILE* in)
             num = (num * 10) + (c - '0');
         }
         num *= sign;
-        if (Is_Delimiter(c)) {
+        if (IsDelimiter(c)) {
             ungetc(c, in);
-            return Make_Fixnum(num);
+            return MakeFixnum(num);
         } else {
             fprintf(stderr, "number not followed by delimiter.\n");
             exit(1);

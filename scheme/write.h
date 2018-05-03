@@ -3,6 +3,6 @@
 
 #include "object.h"
 
-extern void Write(Scheme_Object* obj);
+extern void Write(SchemeObject* obj);
 
 #endif //SCHEME_C_WRITE_H

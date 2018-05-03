@@ -3,9 +3,9 @@
 #include <stdlib.h>
 
 /* no GC */
-Scheme_Object* Alloc_Object()
+SchemeObject* AllocObject()
 {
-    Scheme_Object* obj = malloc(sizeof(Scheme_Object));
+    SchemeObject* obj = malloc(sizeof(SchemeObject));
     if (obj == NULL) {
         fprintf(stderr, "Out of memory!\n");
         exit(1);
@@ -13,44 +13,44 @@ Scheme_Object* Alloc_Object()
     return obj;
 }
 
-Scheme_Object* Make_Fixnum(long value)
+SchemeObject* MakeFixnum(long value)
 {
-    Scheme_Object* obj = Alloc_Object();
+    SchemeObject* obj = AllocObject();
     obj->type = FIXNUM;
     obj->data.fixnum.value = value;
     return obj;
 }
 
-char Is_Fixnum(Scheme_Object* obj)
+char IsFixnum(SchemeObject* obj)
 {
     return obj->type == FIXNUM;
 }
 
-Scheme_Object* True = NULL;
-Scheme_Object* False = NULL;
+SchemeObject* True = NULL;
+SchemeObject* False = NULL;
 
-void Init_Scheme()
+void InitScheme()
 {
-    True = Alloc_Object();
+    True = AllocObject();
     True->type = BOOLEAN;
     True->data.boolean.value = 1;
 
-    False = Alloc_Object();
+    False = AllocObject();
     False->type = BOOLEAN;
     False->data.boolean.value = 0;
 }
 
-char Is_Boolean(Scheme_Object* obj)
+char IsBoolean(SchemeObject* obj)
 {
     return obj->type == BOOLEAN;
 }
 
-char Is_False(Scheme_Object* obj)
+char IsFalse(SchemeObject* obj)
 {
     return obj == False;
 }
 
-char Is_True(Scheme_Object* obj)
+char IsTrue(SchemeObject* obj)
 {
-    return !Is_False(obj);
+    return !IsFalse(obj);
 }

@@ -3,6 +3,6 @@
 
 typedef enum {
     BOOLEAN, FIXNUM
-} Scheme_Object_Type;
+} SchemeObjectType;
 
 #endif //SCHEME_C_TYPE_H

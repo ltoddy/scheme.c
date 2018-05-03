@@ -3,6 +3,6 @@
 
 #include "object.h"
 
-extern Scheme_Object* Eval(Scheme_Object* exp);
+extern SchemeObject* Eval(SchemeObject* exp);
 
 #endif //SCHEME_C_EVAL_H

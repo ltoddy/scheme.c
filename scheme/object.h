@@ -4,8 +4,8 @@
 #include <stddef.h>
 #include "type.h"
 
-typedef struct Scheme_Object {
-    Scheme_Object_Type type;
+typedef struct SchemeObject {
+    SchemeObjectType type;
     union {
         struct {
             char value;
@@ -14,23 +14,23 @@ typedef struct Scheme_Object {
             long value;
         } fixnum;
     } data;
-} Scheme_Object;
+} SchemeObject;
 
-extern Scheme_Object* Alloc_Object();
+extern SchemeObject* AllocObject();
 
-extern Scheme_Object* Make_Fixnum(long value);
+extern SchemeObject* MakeFixnum(long value);
 
-extern char Is_Fixnum(Scheme_Object* obj);
+extern char IsFixnum(SchemeObject* obj);
 
-extern void Init_Scheme();
+extern void InitScheme();
 
-extern Scheme_Object* True;
-extern Scheme_Object* False;
+extern SchemeObject* True;
+extern SchemeObject* False;
 
-extern char Is_Boolean(Scheme_Object* obj);
+extern char IsBoolean(SchemeObject* obj);
 
-extern char Is_False(Scheme_Object* obj);
+extern char IsFalse(SchemeObject* obj);
 
-extern char Is_True(Scheme_Object* obj);
+extern char IsTrue(SchemeObject* obj);
 
 #endif //SCHEME_C_OBJECT_H
