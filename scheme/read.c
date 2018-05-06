@@ -36,6 +36,53 @@ static void SkipWhitespace(FILE* in)
     }
 }
 
+static void SkipExpectedString(FILE* in, char* str)
+{
+    int c;
+    while (*str != '\0') {
+        c = getc(in);
+        if (c != *str) {
+            fprintf(stderr, "unexpected character '%c'\n", c);
+            exit(1);
+        }
+        str++;
+    }
+}
+
+static void PeekExpectedDelimiter(FILE* in)
+{
+    if (!IsDelimiter(Peek(in))) {
+        fprintf(stderr, "character not followed by delimiter.");
+        exit(1);
+    }
+}
+
+static SchemeObject* ReadCharacter(FILE* in)
+{
+    int c = getc(in);
+    switch (c) {
+        case EOF:
+            fprintf(stderr, "incomplete character literal.\n");
+            exit(1);
+        case 's':
+            if (Peek(in) == 'p') {
+                SkipExpectedString(in, "pace");
+                PeekExpectedDelimiter(in);
+                return MakeCharacter(' ');
+            }
+            break;
+        case 'n':
+            if (Peek(in) == 'e') {
+                SkipExpectedString(in, "ewline");
+                PeekExpectedDelimiter(in);
+                return MakeCharacter('\n');
+            }
+            break;
+    }
+    PeekExpectedDelimiter(in);
+    return MakeCharacter(c);
+}
+
 SchemeObject* Read(FILE* in)
 {
     int c = 0;
@@ -43,15 +90,17 @@ SchemeObject* Read(FILE* in)
     long num = 0;
     SkipWhitespace(in);
     c = getc(in);
-    if (c == '#') {
+    if (c == '#') { /* read boolean or character */
         c = getc(in);
         switch (c) {
             case 't':
                 return True;
             case 'f':
                 return False;
+            case '\\':
+                return ReadCharacter(in);
             default:
-                fprintf(stderr, "unknown boolean literal\n");
+                fprintf(stderr, "unknown boolean or characcter literal.\n");
                 exit(1);
         }
     } else if (isdigit(c) || (c == '-' && isdigit(Peek(in)))) {
