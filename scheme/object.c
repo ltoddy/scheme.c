@@ -54,3 +54,16 @@ char IsTrue(SchemeObject* obj)
 {
     return !IsFalse(obj);
 }
+
+SchemeObject* MakeCharacter(char value)
+{
+    SchemeObject* obj = AllocObject();
+    obj->type = CHARACTER;
+    obj->data.character.value = value;
+    return obj;
+}
+
+char IsCharacter(SchemeObject* obj)
+{
+    return obj->type == CHARACTER;
+}

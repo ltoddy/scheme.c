@@ -3,9 +3,9 @@
 ### usage
 
 ```
-$cmake .
-$make
-$./scheme_c
+$ cmake .
+$ make
+$ ./scheme_c
 Welcome to Scheme. Use ctrl-c to exit.
 > #t
 #t
@@ -18,5 +18,4 @@ Welcome to Scheme. Use ctrl-c to exit.
 > 003
 3
 > ^C
-
 ```
