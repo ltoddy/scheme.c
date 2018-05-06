@@ -17,5 +17,7 @@ Welcome to Scheme. Use ctrl-c to exit.
 -123
 > 003
 3
+> #\c
+#\c
 > ^C
 ```
