@@ -32,6 +32,7 @@ extern void InitScheme();
 
 extern SchemeObject* True;
 extern SchemeObject* False;
+extern SchemeObject* The_Empty_List;
 
 extern char IsBoolean(SchemeObject* obj);
 

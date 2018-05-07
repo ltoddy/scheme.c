@@ -28,6 +28,7 @@ char IsFixnum(SchemeObject* obj)
 
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;
+SchemeObject* The_Empty_List = NULL;
 
 void InitScheme()
 {
@@ -38,6 +39,10 @@ void InitScheme()
     False = AllocObject();
     False->type = BOOLEAN;
     False->data.boolean.value = 0;
+
+    The_Empty_List = AllocObject();
+    The_Empty_List->type = THE_EMPTY_LIST;
+    The_Empty_List->data = NULL;
 }
 
 char IsBoolean(SchemeObject* obj)
