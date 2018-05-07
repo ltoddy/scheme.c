@@ -67,3 +67,16 @@ char IsCharacter(SchemeObject* obj)
 {
     return obj->type == CHARACTER;
 }
+
+SchemeObject* MakeString(char* value)
+{
+    SchemeObject* obj = AllocObject();
+    obj->type = STRING;
+    obj->data.string.value = value;
+    return obj;
+}
+
+char IsString(SchemeObject* obj)
+{
+    return obj->type == STRING;
+}

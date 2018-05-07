@@ -6,6 +6,7 @@
 void Write(SchemeObject* obj)
 {
     char c;
+    char* str;
 
     switch (obj->type) {
         case FIXNUM:
@@ -28,6 +29,27 @@ void Write(SchemeObject* obj)
                     putchar(c);
                     break;
             }
+            break;
+        case STRING:
+            str = obj->data.string.value;
+            putchar('"');
+            while (*str != '\0') {
+                switch (*str) {
+                    case '\n':
+                        printf("\\n");
+                        break;
+                    case '\\':
+                        printf("\\\\");
+                        break;
+                    case '"':
+                        printf("\\\"");
+                        break;
+                    default:
+                        putchar(*str);
+                }
+                str++;
+            }
+            putchar('"');
             break;
         default:
             fprintf(stderr, "cannot write unknown type.\n");

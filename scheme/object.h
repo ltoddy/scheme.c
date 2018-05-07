@@ -16,6 +16,9 @@ typedef struct SchemeObject {
         struct {
             char value;
         } character;
+        struct {
+            char* value;
+        } string;
     } data;
 } SchemeObject;
 
@@ -39,5 +42,9 @@ extern char IsTrue(SchemeObject* obj);
 extern SchemeObject* MakeCharacter(char value);
 
 extern char IsCharacter(SchemeObject* obj);
+
+extern SchemeObject* MakeString(char* value);
+
+extern char IsString(SchemeObject* obj);
 
 #endif //SCHEME_C_OBJECT_H
