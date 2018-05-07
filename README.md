@@ -19,5 +19,11 @@ Welcome to Scheme. Use ctrl-c to exit.
 3
 > #\c
 #\c
+> "abc"
+"abc"
+> "a
+
+   bbsd"
+"a\n\n   bbsd"
 > ^C
 ```
