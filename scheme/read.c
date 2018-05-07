@@ -78,9 +78,11 @@ static SchemeObject* ReadCharacter(FILE* in)
                 return MakeCharacter('\n');
             }
             break;
+        default:
+            break;
     }
     PeekExpectedDelimiter(in);
-    return MakeCharacter(c);
+    return MakeCharacter((char) c);
 }
 
 SchemeObject* Read(FILE* in)
@@ -147,6 +149,16 @@ SchemeObject* Read(FILE* in)
         }
         buffer[i] = '\0';
         return MakeString(buffer);
+    } else if (c == '(') { /* read the empty list */
+        SkipWhitespace(in);
+        c = getc(in);
+        if (c == ')') {
+            return The_Empty_List;
+        } else {
+            fprintf(stderr, "unexpected character %c. Expecting ')'\n", c);
+            exit(1);
+        }
+
     } else {
         fprintf(stderr, "bad input. Unexpected '%c'\n", c);
         exit(1);
