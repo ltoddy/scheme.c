@@ -88,6 +88,10 @@ SchemeObject* Read(FILE* in)
     int c = 0;
     short sign = 1;
     long num = 0;
+
+#define MAX_BUFFER 1024
+    char buffer[MAX_BUFFER];
+
     SkipWhitespace(in);
     c = getc(in);
     if (c == '#') { /* read boolean or character */
@@ -121,6 +125,28 @@ SchemeObject* Read(FILE* in)
             fprintf(stderr, "number not followed by delimiter.\n");
             exit(1);
         }
+    } else if (c == '"') { /* read a string */
+        int i = 0;
+        while ((c = getc(in)) != '"') {
+            if (c == '\\') {
+                c = getc(in);
+                if (c == 'n') {
+                    c = '\n';
+                }
+            }
+            if (c == EOF) {
+                fprintf(stderr, "non-terminated string literal.\n");
+                exit(1);
+            }
+            if (i < MAX_BUFFER - 1) {
+                buffer[i++] = (char) c;
+            } else {
+                fprintf(stderr, "string too long. Maximum length is %d\n", MAX_BUFFER);
+                exit(1);
+            }
+        }
+        buffer[i] = '\0';
+        return MakeString(buffer);
     } else {
         fprintf(stderr, "bad input. Unexpected '%c'\n", c);
         exit(1);
