@@ -51,6 +51,9 @@ void Write(SchemeObject* obj)
             }
             putchar('"');
             break;
+        case THE_EMPTY_LIST:
+            printf("()");
+            break;
         default:
             fprintf(stderr, "cannot write unknown type.\n");
             exit(1);

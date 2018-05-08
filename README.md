@@ -25,5 +25,7 @@ Welcome to Scheme. Use ctrl-c to exit.
 
    bbsd"
 "a\n\n   bbsd"
+> ()
+()
 > ^C
 ```
