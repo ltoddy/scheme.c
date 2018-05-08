@@ -42,7 +42,6 @@ void InitScheme()
 
     The_Empty_List = AllocObject();
     The_Empty_List->type = THE_EMPTY_LIST;
-    The_Empty_List->data = NULL;
 }
 
 char IsBoolean(SchemeObject* obj)
