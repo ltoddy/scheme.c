@@ -3,6 +3,22 @@
 #include "write.h"
 #include "object.h"
 
+static void WritePair(SchemeObject* pair)
+{
+    SchemeObject* car = Car(pair);
+    SchemeObject* cdr = Cdr(pair);
+    Write(car);
+    if (cdr->type == PAIR) {
+        printf(" ");
+        WritePair(cdr);
+    } else if (cdr->type == THE_EMPTY_LIST) {
+        return;
+    } else {
+        printf(" . ");
+        Write(cdr);
+    }
+}
+
 void Write(SchemeObject* obj)
 {
     char c;
@@ -50,6 +66,11 @@ void Write(SchemeObject* obj)
                 str++;
             }
             putchar('"');
+            break;
+        case PAIR:
+            printf("(");
+            WritePair(obj);
+            printf(")");
             break;
         case THE_EMPTY_LIST:
             printf("()");

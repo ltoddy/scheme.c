@@ -85,6 +85,45 @@ static SchemeObject* ReadCharacter(FILE* in)
     return MakeCharacter((char) c);
 }
 
+static SchemeObject* ReadPair(FILE* in)
+{
+    int c;
+    SchemeObject* car;
+    SchemeObject* cdr;
+
+    SkipWhitespace(in);
+
+    c = getc(in);
+    if (c == ')') { /* read the empty list */
+        return The_Empty_List;
+    }
+    ungetc(c, in);
+
+    car = Read(in);
+    SkipWhitespace(in);
+
+    c = getc(in);
+    if (c == '.') { /* read improper list */
+        c = Peek(in);
+        if (!IsDelimiter(c)) {
+            fprintf(stderr, "dot not followed by delimiter.\n");
+            exit(1);
+        }
+        cdr = Read(in);
+        SkipWhitespace(in);
+        c = getc(in);
+        if (c != ')') {
+            fprintf(stderr, "where was the trailing right paren?\n");
+            exit(1);
+        }
+        return Cons(car, cdr);
+    } else { /* read list */
+        ungetc(c, in);
+        cdr = ReadPair(in);
+        return Cons(car, cdr);
+    }
+}
+
 SchemeObject* Read(FILE* in)
 {
     int c = 0;
@@ -149,16 +188,8 @@ SchemeObject* Read(FILE* in)
         }
         buffer[i] = '\0';
         return MakeString(buffer);
-    } else if (c == '(') { /* read the empty list */
-        SkipWhitespace(in);
-        c = getc(in);
-        if (c == ')') {
-            return The_Empty_List;
-        } else {
-            fprintf(stderr, "unexpected character %c. Expecting ')'\n", c);
-            exit(1);
-        }
-
+    } else if (c == '(') { /* read the empty list or pair */
+        return ReadPair(in);
     } else {
         fprintf(stderr, "bad input. Unexpected '%c'\n", c);
         exit(1);
