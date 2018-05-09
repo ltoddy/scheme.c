@@ -1,4 +1,7 @@
-## A Scheme interpereter.
+<div align="center">
+    <h1>A Scheme interpereter.</h1>
+    <img src="assets/illya.gif"/>
+</div>
 
 ### usage
 
