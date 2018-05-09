@@ -19,6 +19,10 @@ typedef struct SchemeObject {
         struct {
             char* value;
         } string;
+        struct {
+            struct SchemeObject* car;
+            struct SchemeObject* cdr;
+        } pair;
     } data;
 } SchemeObject;
 
@@ -47,5 +51,17 @@ extern char IsCharacter(SchemeObject* obj);
 extern SchemeObject* MakeString(char* value);
 
 extern char IsString(SchemeObject* obj);
+
+extern SchemeObject* Cons(SchemeObject* car, SchemeObject* cdr);
+
+extern char IsPair(SchemeObject* obj);
+
+extern SchemeObject* Car(SchemeObject* pair);
+
+extern void SetCar(SchemeObject* pair, SchemeObject* value);
+
+extern SchemeObject* Cdr(SchemeObject* pair);
+
+extern void SetCdr(SchemeObject* pair, SchemeObject* value);
 
 #endif //SCHEME_C_OBJECT_H
