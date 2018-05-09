@@ -84,3 +84,37 @@ char IsString(SchemeObject* obj)
 {
     return obj->type == STRING;
 }
+
+SchemeObject* Cons(SchemeObject* car, SchemeObject* cdr)
+{
+    SchemeObject* obj = AllocObject();
+    obj->type = PAIR;
+    obj->data.pair.car = car;
+    obj->data.pair.cdr = cdr;
+    return obj;
+}
+
+char IsPair(SchemeObject* obj)
+{
+    return obj->type == PAIR;
+}
+
+SchemeObject* Car(SchemeObject* pair)
+{
+    return pair->data.pair.car;
+}
+
+void SetCar(SchemeObject* pair, SchemeObject* value)
+{
+    pair->data.pair.car = value;
+}
+
+SchemeObject* Cdr(SchemeObject* pair)
+{
+    return pair->data.pair.cdr;
+}
+
+void SetCdr(SchemeObject* pair, SchemeObject* value)
+{
+    pair->data.pair.cdr = value;
+}
