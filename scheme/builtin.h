@@ -1,8 +1,33 @@
-//
-// Created by ltoddy on 5/7/18.
-//
-
 #ifndef SCHEME_C_BUILTIN_H
 #define SCHEME_C_BUILTIN_H
+
+#define caar(obj)   Car(Car(obj))
+#define cadr(obj)   Car(Cdr(obj))
+#define cdar(obj)   Cdr(Car(obj))
+#define cddr(obj)   Cdr(Cdr(obj))
+#define caaar(obj)  Car(Car(Car(obj)))
+#define caadr(obj)  Car(Car(Cdr(obj)))
+#define cadar(obj)  Car(Cdr(Car(obj)))
+#define caddr(obj)  Car(Cdr(Cdr(obj)))
+#define cdaar(obj)  Cdr(Car(Car(obj)))
+#define cdadr(obj)  Cdr(Car(Cdr(obj)))
+#define cddar(obj)  Cdr(Cdr(Car(obj)))
+#define cdddr(obj)  Cdr(Cdr(Cdr(obj)))
+#define caaaar(obj) Car(Car(Car(Car(obj))))
+#define caaadr(obj) Car(Car(Car(Cdr(obj))))
+#define caadar(obj) Car(Car(Cdr(Car(obj))))
+#define caaddr(obj) Car(Car(Cdr(Cdr(obj))))
+#define cadaar(obj) Car(Cdr(Car(Car(obj))))
+#define cadadr(obj) Car(Cdr(Car(Cdr(obj))))
+#define caddar(obj) Car(Cdr(Cdr(Car(obj))))
+#define cadddr(obj) Car(Cdr(Cdr(Cdr(obj))))
+#define cdaaar(obj) Cdr(Car(Car(Car(obj))))
+#define cdaadr(obj) Cdr(Car(Car(Cdr(obj))))
+#define cdadar(obj) Cdr(Car(Cdr(Car(obj))))
+#define cdaddr(obj) Cdr(Car(Cdr(Cdr(obj))))
+#define cddaar(obj) Cdr(Cdr(Car(Car(obj))))
+#define cddadr(obj) Cdr(Cdr(Car(Cdr(obj))))
+#define cdddar(obj) Cdr(Cdr(Cdr(Car(obj))))
+#define cddddr(obj) Cdr(Cdr(Cdr(Cdr(obj))))
 
 #endif //SCHEME_C_BUILTIN_H
