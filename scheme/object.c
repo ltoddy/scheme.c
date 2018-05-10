@@ -1,6 +1,7 @@
 #include "object.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* no GC */
 SchemeObject* AllocObject()
@@ -29,6 +30,7 @@ char IsFixnum(SchemeObject* obj)
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;
 SchemeObject* The_Empty_List = NULL;
+SchemeObject* Symbol_Table = NULL;
 
 void InitScheme()
 {
@@ -42,6 +44,12 @@ void InitScheme()
 
     The_Empty_List = AllocObject();
     The_Empty_List->type = THE_EMPTY_LIST;
+    Symbol_Table = The_Empty_List;
+}
+
+char IsTheEmptyList(SchemeObject* obj)
+{
+    return obj == The_Empty_List;
 }
 
 char IsBoolean(SchemeObject* obj)
@@ -117,4 +125,36 @@ SchemeObject* Cdr(SchemeObject* pair)
 void SetCdr(SchemeObject* pair, SchemeObject* value)
 {
     pair->data.pair.cdr = value;
+}
+
+SchemeObject* MakeSymbol(char* value)
+{
+    SchemeObject* obj;
+    SchemeObject* element;
+
+    /* search for they symbol in the symbol table */
+    element = Symbol_Table;
+    while (!IsTheEmptyList(element)) {
+        if (strcmp(Car(element)->data.symbol.value, value) == 0) {
+            return Car(element);
+        }
+        element = Cdr(element);
+    }
+
+    /* create the symbol and it to the symbol table */
+    obj = AllocObject();
+    obj->type = SYMBOL;
+    obj->data.symbol.value = malloc(strlen(value) + 1);
+    if (obj->data.symbol.value == NULL) {
+        fprintf(stderr, "Out of memory.\n");
+        exit(1);
+    }
+    strcpy(obj->data.symbol.value, value);
+    Symbol_Table = Cons(obj, Symbol_Table);
+    return obj;
+}
+
+char IsSymbol(SchemeObject* obj)
+{
+    return obj->type == SYMBOL;
 }
