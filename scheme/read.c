@@ -14,6 +14,18 @@ static char IsDelimiter(int c)
            c == ';';
 }
 
+static char IsInitial(int c)
+{
+    return isalpha(c) ||
+           c == '*' ||
+           c == '/' ||
+           c == '>' ||
+           c == '<' ||
+           c == '=' ||
+           c == '?' ||
+           c == '!';
+}
+
 static int Peek(FILE* in)
 {
     int c = getc(in);
@@ -164,6 +176,25 @@ SchemeObject* Read(FILE* in)
             return MakeFixnum(num);
         } else {
             fprintf(stderr, "number not followed by delimiter.\n");
+            exit(1);
+        }
+    } else if (IsInitial(c) || ((c == '+') || (c == '-')) && IsDelimiter(Peek(in))) { /* read a symbol */
+        int i = 0;
+        while (IsInitial(c) || isdigit(c) || c == '+' || c == '-') { /* subtract 1 to save space for '\0' terminator */
+            if (i < MAX_BUFFER - 1) {
+                buffer[i++] = (char) c;
+            } else {
+                fprintf(stderr, "symbol too long. Maximum length is %d\n", MAX_BUFFER);
+                exit(1);
+            }
+            c = getc(in);
+        }
+        if (IsDelimiter(c)) {
+            buffer[i] = '\0';
+            ungetc(c, in);
+            return MakeSymbol(buffer);
+        } else {
+            fprintf(stderr, "symbol not followed by delimiter. Found '%c'\n", c);
             exit(1);
         }
     } else if (c == '"') { /* read a string */
