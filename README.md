@@ -1,5 +1,5 @@
 <div align="center">
-    <h1>A Scheme interpereter.</h1>
+    <h1>A Scheme interpreter.</h1>
     <img src="assets/illya.gif"/>
 </div>
 
