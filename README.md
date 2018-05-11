@@ -32,5 +32,15 @@ Welcome to Scheme. Use ctrl-c to exit.
 ()
 > ac
 ac
+> (quote ())
+()
+> (quote (0 1))
+(0 1)
+> (quote (0 . 1))
+(0 . 1)
+> (quote (1 2 3 4))
+(1 2 3 4)
+> (quote abcde)
+abcde
 > ^C
 ```
