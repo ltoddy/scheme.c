@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "builtin.h"
 
 /* no GC */
 SchemeObject* AllocObject()
@@ -31,6 +32,7 @@ SchemeObject* True = NULL;
 SchemeObject* False = NULL;
 SchemeObject* The_Empty_List = NULL;
 SchemeObject* Symbol_Table = NULL;
+SchemeObject* Quote_Symbol = NULL;
 
 void InitScheme()
 {
@@ -45,6 +47,7 @@ void InitScheme()
     The_Empty_List = AllocObject();
     The_Empty_List->type = THE_EMPTY_LIST;
     Symbol_Table = The_Empty_List;
+    Quote_Symbol = MakeSymbol("quote");
 }
 
 char IsTheEmptyList(SchemeObject* obj)
@@ -157,4 +160,32 @@ SchemeObject* MakeSymbol(char* value)
 char IsSymbol(SchemeObject* obj)
 {
     return obj->type == SYMBOL;
+}
+
+char IsSelfEvaluting(SchemeObject* exp)
+{
+    return IsBoolean(exp) ||
+           IsFixnum(exp) ||
+           IsCharacter(exp) ||
+           IsString(exp);
+}
+
+char IsTaggedList(SchemeObject* exp, SchemeObject* tag)
+{
+    SchemeObject* car;
+    if (IsPair(exp)) {
+        car = Car(exp);
+        return IsSymbol(car) && (car == tag);
+    }
+    return 0;
+}
+
+char IsQuote(SchemeObject* exp)
+{
+    return IsTaggedList(exp, Quote_Symbol);
+}
+
+SchemeObject* TextOfQuotation(SchemeObject* exp)
+{
+    return CADR(exp);
 }
