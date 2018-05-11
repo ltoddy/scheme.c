@@ -221,6 +221,8 @@ SchemeObject* Read(FILE* in)
         return MakeString(buffer);
     } else if (c == '(') { /* read the empty list or pair */
         return ReadPair(in);
+    } else if (c == '\'') { /* read quoted expression */
+        return Cons(Quote_Symbol, Cons(Read(in), The_Empty_List));
     } else {
         fprintf(stderr, "bad input. Unexpected '%c'\n", c);
         exit(1);
