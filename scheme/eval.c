@@ -1,7 +1,17 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "eval.h"
 
-/* until we have lists and symbols just echo */
 SchemeObject* Eval(SchemeObject* exp)
 {
-    return exp;
+    if (IsSelfEvaluting(exp)) {
+        return exp;
+    } else if (IsQuote(exp)) {
+        return TextOfQuotation(exp);
+    } else {
+        fprintf(stderr, "cannot eval unknown expression type.\n");
+        exit(1);
+    }
+    fprintf(stderr, "eval illegal state.\n");
+    exit(1);
 }
