@@ -25,6 +25,9 @@ void Write(SchemeObject* obj)
     char* str;
 
     switch (obj->type) {
+        case SYMBOL:
+            printf("%s", obj->data.symbol.value);
+            break;
         case FIXNUM:
             printf("%ld", obj->data.fixnum.value);
             break;

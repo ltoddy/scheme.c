@@ -11,6 +11,9 @@ typedef struct SchemeObject {
             char value;
         } boolean;
         struct {
+            char* value;
+        } symbol;
+        struct {
             long value;
         } fixnum;
         struct {
@@ -37,6 +40,10 @@ extern void InitScheme();
 extern SchemeObject* True;
 extern SchemeObject* False;
 extern SchemeObject* The_Empty_List;
+extern SchemeObject* Symbol_Table;
+extern SchemeObject* Quote_Symbol;
+
+extern char IsTheEmptyList(SchemeObject* obj);
 
 extern char IsBoolean(SchemeObject* obj);
 
@@ -63,5 +70,17 @@ extern void SetCar(SchemeObject* pair, SchemeObject* value);
 extern SchemeObject* Cdr(SchemeObject* pair);
 
 extern void SetCdr(SchemeObject* pair, SchemeObject* value);
+
+extern SchemeObject* MakeSymbol(char* value);
+
+extern char IsSymbol(SchemeObject* obj);
+
+extern char IsSelfEvaluting(SchemeObject* exp);
+
+extern char IsTaggedList(SchemeObject* exp, SchemeObject* tag);
+
+extern char IsQuote(SchemeObject* exp);
+
+extern SchemeObject* TextOfQuotation(SchemeObject* exp);
 
 #endif //SCHEME_C_OBJECT_H
