@@ -39,9 +39,9 @@ extern void InitScheme();
 
 extern SchemeObject* True;
 extern SchemeObject* False;
-extern SchemeObject* The_Empty_List;
-extern SchemeObject* Symbol_Table;
-extern SchemeObject* Quote_Symbol;
+extern SchemeObject* TheEmptyList;
+extern SchemeObject* SymbolTable;
+extern SchemeObject* QuoteSymbol;
 
 extern char IsTheEmptyList(SchemeObject* obj);
 
@@ -74,13 +74,5 @@ extern void SetCdr(SchemeObject* pair, SchemeObject* value);
 extern SchemeObject* MakeSymbol(char* value);
 
 extern char IsSymbol(SchemeObject* obj);
-
-extern char IsSelfEvaluting(SchemeObject* exp);
-
-extern char IsTaggedList(SchemeObject* exp, SchemeObject* tag);
-
-extern char IsQuote(SchemeObject* exp);
-
-extern SchemeObject* TextOfQuotation(SchemeObject* exp);
 
 #endif //SCHEME_C_OBJECT_H

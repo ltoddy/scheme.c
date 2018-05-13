@@ -107,7 +107,7 @@ static SchemeObject* ReadPair(FILE* in)
 
     c = getc(in);
     if (c == ')') { /* read the empty list */
-        return The_Empty_List;
+        return TheEmptyList;
     }
     ungetc(c, in);
 
@@ -222,7 +222,7 @@ SchemeObject* Read(FILE* in)
     } else if (c == '(') { /* read the empty list or pair */
         return ReadPair(in);
     } else if (c == '\'') { /* read quoted expression */
-        return Cons(Quote_Symbol, Cons(Read(in), The_Empty_List));
+        return Cons(QuoteSymbol, Cons(Read(in), TheEmptyList));
     } else {
         fprintf(stderr, "bad input. Unexpected '%c'\n", c);
         exit(1);

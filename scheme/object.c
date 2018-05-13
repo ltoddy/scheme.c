@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "builtin.h"
+#include "environment.h"
 
 /* no GC */
 SchemeObject* AllocObject()
@@ -30,9 +31,9 @@ char IsFixnum(SchemeObject* obj)
 
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;
-SchemeObject* The_Empty_List = NULL;
-SchemeObject* Symbol_Table = NULL;
-SchemeObject* Quote_Symbol = NULL;
+SchemeObject* TheEmptyList = NULL;
+SchemeObject* SymbolTable = NULL;
+SchemeObject* QuoteSymbol = NULL;
 
 void InitScheme()
 {
@@ -44,15 +45,17 @@ void InitScheme()
     False->type = BOOLEAN;
     False->data.boolean.value = 0;
 
-    The_Empty_List = AllocObject();
-    The_Empty_List->type = THE_EMPTY_LIST;
-    Symbol_Table = The_Empty_List;
-    Quote_Symbol = MakeSymbol("quote");
+    TheEmptyList = AllocObject();
+    TheEmptyList->type = THE_EMPTY_LIST;
+    SymbolTable = TheEmptyList;
+    QuoteSymbol = MakeSymbol("quote");
+
+    InitEnvironment();
 }
 
 char IsTheEmptyList(SchemeObject* obj)
 {
-    return obj == The_Empty_List;
+    return obj == TheEmptyList;
 }
 
 char IsBoolean(SchemeObject* obj)
@@ -136,7 +139,7 @@ SchemeObject* MakeSymbol(char* value)
     SchemeObject* element;
 
     /* search for they symbol in the symbol table */
-    element = Symbol_Table;
+    element = SymbolTable;
     while (!IsTheEmptyList(element)) {
         if (strcmp(Car(element)->data.symbol.value, value) == 0) {
             return Car(element);
@@ -153,39 +156,11 @@ SchemeObject* MakeSymbol(char* value)
         exit(1);
     }
     strcpy(obj->data.symbol.value, value);
-    Symbol_Table = Cons(obj, Symbol_Table);
+    SymbolTable = Cons(obj, SymbolTable);
     return obj;
 }
 
 char IsSymbol(SchemeObject* obj)
 {
     return obj->type == SYMBOL;
-}
-
-char IsSelfEvaluting(SchemeObject* exp)
-{
-    return IsBoolean(exp) ||
-           IsFixnum(exp) ||
-           IsCharacter(exp) ||
-           IsString(exp);
-}
-
-char IsTaggedList(SchemeObject* exp, SchemeObject* tag)
-{
-    SchemeObject* car;
-    if (IsPair(exp)) {
-        car = Car(exp);
-        return IsSymbol(car) && (car == tag);
-    }
-    return 0;
-}
-
-char IsQuote(SchemeObject* exp)
-{
-    return IsTaggedList(exp, Quote_Symbol);
-}
-
-SchemeObject* TextOfQuotation(SchemeObject* exp)
-{
-    return CADR(exp);
 }
