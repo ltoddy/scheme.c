@@ -3,6 +3,7 @@
 #include "scheme/eval.h"
 #include "scheme/read.h"
 #include "scheme/object.h"
+#include "scheme/environment.h"
 
 int main()
 {
@@ -12,7 +13,7 @@ int main()
 
     while (1) {
         printf("> ");
-        Write(Eval(Read(stdin)));
+        Write(Eval(Read(stdin), TheGlobalEnvironment));
         printf("\n");
     }
 
