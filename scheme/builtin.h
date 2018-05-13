@@ -42,6 +42,7 @@ extern SchemeObject* TheGlobalEnvironment;
 extern SchemeObject* DefineSymbol;
 extern SchemeObject* SetSymbol;
 extern SchemeObject* OkSymbol;
+extern SchemeObject* IfSymbol;
 
 extern void InitScheme();
 

@@ -3,6 +3,8 @@
 #include "eval.h"
 #include "builtin.h"
 #include "environment.h"
+#include "assignment.h"
+#include "if.h"
 
 static char IsSelfEvaluting(SchemeObject* exp)
 {
@@ -17,7 +19,7 @@ static char IsVariable(SchemeObject* exp)
     return IsSymbol(exp);
 }
 
-static char IsTaggedList(SchemeObject* exp, SchemeObject* tag)
+char IsTaggedList(SchemeObject* exp, SchemeObject* tag)
 {
     SchemeObject* car;
     if (IsPair(exp)) {
@@ -81,6 +83,7 @@ static SchemeObject* EvalDefinition(SchemeObject* exp, SchemeObject* environ)
 
 SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
 {
+    call:
     if (IsSelfEvaluting(exp)) {
         return exp;
     } else if (IsVariable(exp)) {
@@ -91,6 +94,9 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
         return EvalAssignment(exp, environ);
     } else if (IsDefine(exp)) {
         return EvalDefinition(exp, environ);
+    } else if (IsIf(exp)) {
+        exp = IsTrue(Eval(IfPredicate(exp), environ)) ? IfConsequent(exp) : IfAlternative(exp);
+        goto call;
     } else {
         fprintf(stderr, "cannot eval unknown expression type.\n");
         exit(1);

@@ -15,4 +15,5 @@ add_executable(
         scheme/environment.c scheme/environment.h
         scheme/assignment.c scheme/assignment.h
         scheme/define.c scheme/define.h
+        scheme/if.c scheme/if.h
 )
