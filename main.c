@@ -2,8 +2,7 @@
 #include "scheme/write.h"
 #include "scheme/eval.h"
 #include "scheme/read.h"
-#include "scheme/object.h"
-#include "scheme/environment.h"
+#include "scheme/builtin.h"
 
 int main()
 {

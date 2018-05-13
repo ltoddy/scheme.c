@@ -1,6 +1,8 @@
 #ifndef SCHEME_C_BUILTIN_H
 #define SCHEME_C_BUILTIN_H
 
+#include "object.h"
+
 #define CAAR(obj)   Car(Car(obj))
 #define CADR(obj)   Car(Cdr(obj))
 #define CDAR(obj)   Cdr(Car(obj))
@@ -29,5 +31,18 @@
 #define CDDADR(obj) Cdr(Cdr(Car(Cdr(obj))))
 #define CDDDAR(obj) Cdr(Cdr(Cdr(Car(obj))))
 #define CDDDDR(obj) Cdr(Cdr(Cdr(Cdr(obj))))
+
+extern SchemeObject* True;
+extern SchemeObject* False;
+extern SchemeObject* TheEmptyList;
+extern SchemeObject* SymbolTable;
+extern SchemeObject* QuoteSymbol;
+extern SchemeObject* TheEmptyEnvironment;
+extern SchemeObject* TheGlobalEnvironment;
+extern SchemeObject* DefineSymbol;
+extern SchemeObject* SetSymbol;
+extern SchemeObject* OkSymbol;
+
+extern void InitScheme();
 
 #endif //SCHEME_C_BUILTIN_H

@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "environment.h"
+#include "builtin.h"
 
 static SchemeObject* EnclosingEnvironment(SchemeObject* environ)
 {
     return Cdr(environ);
 }
 
-static SchemeObject* FirstFrame(SchemeObject* environ)
+SchemeObject* FirstFrame(SchemeObject* environ)
 {
     return Car(environ);
 }
@@ -17,17 +18,17 @@ static SchemeObject* MakeFrame(SchemeObject* variables, SchemeObject* values)
     return Cons(variables, values);
 }
 
-static SchemeObject* FrameVariables(SchemeObject* frame)
+SchemeObject* FrameVariables(SchemeObject* frame)
 {
     return Car(frame);
 }
 
-static SchemeObject* FrameValues(SchemeObject* frame)
+SchemeObject* FrameValues(SchemeObject* frame)
 {
     return Cdr(frame);
 }
 
-static void AddBindingToFrame(SchemeObject* var, SchemeObject* val, SchemeObject* frame)
+void AddBindingToFrame(SchemeObject* var, SchemeObject* val, SchemeObject* frame)
 {
     SetCar(frame, Cons(var, Car(frame)));
     SetCdr(frame, Cons(val, Cdr(frame)));
@@ -77,41 +78,8 @@ void SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject* enviro
     exit(1);
 }
 
-void DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
-{
-    SchemeObject* frame = FirstFrame(environ);
-    SchemeObject* vars = FrameVariables(frame);
-    SchemeObject* vals = FrameValues(frame);
-
-    while (!IsTheEmptyList(vals)) {
-        if (var == Car(vars)) {
-            SetCar(vals, val);
-            return;
-        }
-        vars = Cdr(vars);
-        vals = Cdr(vals);
-    }
-    AddBindingToFrame(var, val, frame);
-}
-
-static SchemeObject* SetupEnvironment()
+SchemeObject* SetupEnvironment()
 {
     SchemeObject* initial_env = ExtendEnvironment(TheEmptyList, TheEmptyList, TheEmptyEnvironment);
     return initial_env;
-}
-
-SchemeObject* TheEmptyEnvironment = NULL;
-SchemeObject* TheGlobalEnvironment = NULL;
-SchemeObject* DefineSymbol = NULL;
-SchemeObject* SetSymbol = NULL;
-SchemeObject* OkSymbol = NULL;
-
-void InitEnvironment()
-{
-    DefineSymbol = MakeSymbol("define");
-    SetSymbol = MakeSymbol("set!");
-    OkSymbol = MakeSymbol("ok");
-
-    TheEmptyEnvironment = TheEmptyList;
-    TheGlobalEnvironment = SetupEnvironment();
 }

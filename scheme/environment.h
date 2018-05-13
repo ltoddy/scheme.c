@@ -3,18 +3,18 @@
 
 #include "object.h"
 
-extern SchemeObject* TheEmptyEnvironment;
-extern SchemeObject* TheGlobalEnvironment;
-extern SchemeObject* DefineSymbol;
-extern SchemeObject* SetSymbol;
-extern SchemeObject* OkSymbol;
+extern SchemeObject* FirstFrame(SchemeObject* environ);
+
+extern SchemeObject* FrameVariables(SchemeObject* frame);
+
+extern SchemeObject* FrameValues(SchemeObject* frame);
+
+extern void AddBindingToFrame(SchemeObject* var, SchemeObject* val, SchemeObject* frame);
 
 extern SchemeObject* LookupVariableValue(SchemeObject* var, SchemeObject* environ);
 
 extern void SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject* environ);
 
-extern void DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ);
-
-extern void InitEnvironment();
+extern SchemeObject* SetupEnvironment();
 
 #endif //SCHEME_C_ENVIRONMENT_H

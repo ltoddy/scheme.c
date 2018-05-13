@@ -1,0 +1,4 @@
+#ifndef SCHEME_C_DEFINE_H
+#define SCHEME_C_DEFINE_H
+
+#endif //SCHEME_C_DEFINE_H

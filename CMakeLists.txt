@@ -13,4 +13,6 @@ add_executable(
         scheme/eval.c scheme/eval.h
         scheme/builtin.c scheme/builtin.h
         scheme/environment.c scheme/environment.h
+        scheme/assignment.c scheme/assignment.h
+        scheme/define.c scheme/define.h
 )

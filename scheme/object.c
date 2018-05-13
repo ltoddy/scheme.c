@@ -29,30 +29,6 @@ char IsFixnum(SchemeObject* obj)
     return obj->type == FIXNUM;
 }
 
-SchemeObject* True = NULL;
-SchemeObject* False = NULL;
-SchemeObject* TheEmptyList = NULL;
-SchemeObject* SymbolTable = NULL;
-SchemeObject* QuoteSymbol = NULL;
-
-void InitScheme()
-{
-    True = AllocObject();
-    True->type = BOOLEAN;
-    True->data.boolean.value = 1;
-
-    False = AllocObject();
-    False->type = BOOLEAN;
-    False->data.boolean.value = 0;
-
-    TheEmptyList = AllocObject();
-    TheEmptyList->type = THE_EMPTY_LIST;
-    SymbolTable = TheEmptyList;
-    QuoteSymbol = MakeSymbol("quote");
-
-    InitEnvironment();
-}
-
 char IsTheEmptyList(SchemeObject* obj)
 {
     return obj == TheEmptyList;

@@ -35,14 +35,6 @@ extern SchemeObject* MakeFixnum(long value);
 
 extern char IsFixnum(SchemeObject* obj);
 
-extern void InitScheme();
-
-extern SchemeObject* True;
-extern SchemeObject* False;
-extern SchemeObject* TheEmptyList;
-extern SchemeObject* SymbolTable;
-extern SchemeObject* QuoteSymbol;
-
 extern char IsTheEmptyList(SchemeObject* obj);
 
 extern char IsBoolean(SchemeObject* obj);
