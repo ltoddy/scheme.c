@@ -11,6 +11,7 @@ SchemeObject* TheGlobalEnvironment = NULL;
 SchemeObject* DefineSymbol = NULL;
 SchemeObject* SetSymbol = NULL;
 SchemeObject* OkSymbol = NULL;
+SchemeObject* IfSymbol = NULL;
 
 void InitScheme()
 {
@@ -30,6 +31,7 @@ void InitScheme()
     DefineSymbol = MakeSymbol("define");
     SetSymbol = MakeSymbol("set!");
     OkSymbol = MakeSymbol("ok");
+    IfSymbol = MakeSymbol("if");
 
     TheEmptyEnvironment = TheEmptyList;
     TheGlobalEnvironment = SetupEnvironment();
