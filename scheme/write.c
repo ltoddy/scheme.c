@@ -78,6 +78,9 @@ void Write(SchemeObject* obj)
         case THE_EMPTY_LIST:
             printf("()");
             break;
+        case PRIMITIVE_PROCEDURE:
+            printf("#<procedure>");
+            break;
         default:
             fprintf(stderr, "cannot write unknown type.\n");
             exit(1);
