@@ -17,4 +17,5 @@ add_executable(
         scheme/define.c scheme/define.h
         scheme/if.c scheme/if.h
         scheme/predicate.c scheme/predicate.h
+        scheme/procedure.c scheme/procedure.h
 )
