@@ -26,6 +26,9 @@ typedef struct SchemeObject {
             struct SchemeObject* car;
             struct SchemeObject* cdr;
         } pair;
+        struct {
+            struct SchemeObject* (* fn)(struct SchemeObject* arguments);
+        } primitive_poc;
     } data;
 } SchemeObject;
 
