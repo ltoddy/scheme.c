@@ -1,5 +1,8 @@
 #include "builtin.h"
 #include "environment.h"
+#include "define.h"
+#include "assignment.h"
+#include "if.h"
 
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;

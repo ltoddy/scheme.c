@@ -3,6 +3,9 @@
 
 #include "object.h"
 
+extern SchemeObject* TheEmptyEnvironment;
+extern SchemeObject* TheGlobalEnvironment;
+
 extern SchemeObject* FirstFrame(SchemeObject* environ);
 
 extern SchemeObject* FrameVariables(SchemeObject* frame);

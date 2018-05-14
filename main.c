@@ -3,6 +3,7 @@
 #include "scheme/eval.h"
 #include "scheme/read.h"
 #include "scheme/builtin.h"
+#include "scheme/environment.h"
 
 int main()
 {

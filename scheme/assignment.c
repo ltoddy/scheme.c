@@ -1,19 +1,17 @@
 #include "assignment.h"
-#include "environment.h"
+#include "predicate.h"
 
-void DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
+char IsAssignment(SchemeObject* exp)
 {
-    SchemeObject* frame = FirstFrame(environ);
-    SchemeObject* vars = FrameVariables(frame);
-    SchemeObject* vals = FrameValues(frame);
+    return IsTaggedList(exp, SetSymbol);
+}
 
-    while (!IsTheEmptyList(vals)) {
-        if (var == Car(vars)) {
-            SetCar(vals, val);
-            return;
-        }
-        vars = Cdr(vars);
-        vals = Cdr(vals);
-    }
-    AddBindingToFrame(var, val, frame);
+SchemeObject* AssignmentVariable(SchemeObject* exp)
+{
+    return Car(Cdr(exp));
+}
+
+SchemeObject* AssignmentValue(SchemeObject* exp)
+{
+    return Car(Cdr(Cdr(exp)));
 }

@@ -5,6 +5,4 @@
 
 extern SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ);
 
-extern char IsTaggedList(SchemeObject* exp, SchemeObject* tag);
-
 #endif //SCHEME_C_EVAL_H

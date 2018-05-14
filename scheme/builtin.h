@@ -32,17 +32,7 @@
 #define CDDDAR(obj) Cdr(Cdr(Cdr(Car(obj))))
 #define CDDDDR(obj) Cdr(Cdr(Cdr(Cdr(obj))))
 
-extern SchemeObject* True;
-extern SchemeObject* False;
-extern SchemeObject* TheEmptyList;
-extern SchemeObject* SymbolTable;
-extern SchemeObject* QuoteSymbol;
-extern SchemeObject* TheEmptyEnvironment;
-extern SchemeObject* TheGlobalEnvironment;
-extern SchemeObject* DefineSymbol;
-extern SchemeObject* SetSymbol;
 extern SchemeObject* OkSymbol;
-extern SchemeObject* IfSymbol;
 
 extern void InitScheme();
 

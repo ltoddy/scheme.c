@@ -4,6 +4,7 @@
 #include <string.h>
 #include "builtin.h"
 #include "environment.h"
+#include "predicate.h"
 
 /* no GC */
 SchemeObject* AllocObject()
@@ -139,4 +140,9 @@ SchemeObject* MakeSymbol(char* value)
 char IsSymbol(SchemeObject* obj)
 {
     return obj->type == SYMBOL;
+}
+
+char IsQuote(SchemeObject* exp)
+{
+    return IsTaggedList(exp, QuoteSymbol);
 }

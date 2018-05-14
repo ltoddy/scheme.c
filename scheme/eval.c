@@ -5,68 +5,13 @@
 #include "environment.h"
 #include "assignment.h"
 #include "if.h"
+#include "define.h"
+#include "predicate.h"
 
-static char IsSelfEvaluting(SchemeObject* exp)
-{
-    return IsBoolean(exp) ||
-           IsFixnum(exp) ||
-           IsCharacter(exp) ||
-           IsString(exp);
-}
-
-static char IsVariable(SchemeObject* exp)
-{
-    return IsSymbol(exp);
-}
-
-char IsTaggedList(SchemeObject* exp, SchemeObject* tag)
-{
-    SchemeObject* car;
-    if (IsPair(exp)) {
-        car = Car(exp);
-        return IsSymbol(car) && (car == tag);
-    }
-    return 0;
-}
-
-static char IsQuote(SchemeObject* exp)
-{
-    return IsTaggedList(exp, QuoteSymbol);
-}
 
 static SchemeObject* TextOfQuotation(SchemeObject* exp)
 {
     return CADR(exp);
-}
-
-static char IsAssignment(SchemeObject* exp)
-{
-    return IsTaggedList(exp, SetSymbol);
-}
-
-static SchemeObject* AssignmentVariable(SchemeObject* exp)
-{
-    return Car(Cdr(exp));
-}
-
-static SchemeObject* AssignmentValue(SchemeObject* exp)
-{
-    return Car(Cdr(Cdr(exp)));
-}
-
-static char IsDefine(SchemeObject* exp)
-{
-    return IsTaggedList(exp, DefineSymbol);
-}
-
-static SchemeObject* DefinitionVariable(SchemeObject* exp)
-{
-    return CADR(exp);
-}
-
-static SchemeObject* DefinitionValue(SchemeObject* exp)
-{
-    return CADDR(exp);
 }
 
 static SchemeObject* EvalAssignment(SchemeObject* exp, SchemeObject* environ)
@@ -84,7 +29,7 @@ static SchemeObject* EvalDefinition(SchemeObject* exp, SchemeObject* environ)
 SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
 {
     call:
-    if (IsSelfEvaluting(exp)) {
+    if (IsSelfEvaluating(exp)) {
         return exp;
     } else if (IsVariable(exp)) {
         return LookupVariableValue(exp, environ);

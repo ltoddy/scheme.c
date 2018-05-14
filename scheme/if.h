@@ -3,6 +3,8 @@
 #ifndef SCHEME_C_IF_H
 #define SCHEME_C_IF_H
 
+extern SchemeObject* IfSymbol;
+
 extern char IsIf(SchemeObject* exp);
 
 extern SchemeObject* IfPredicate(SchemeObject* exp);

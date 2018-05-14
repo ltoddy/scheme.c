@@ -1,6 +1,7 @@
 #include "if.h"
 #include "builtin.h"
 #include "eval.h"
+#include "predicate.h"
 
 /*
 (if (predicate) (consequent) (alternative))

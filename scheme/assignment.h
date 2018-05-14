@@ -3,6 +3,12 @@
 
 #include "object.h"
 
-extern void DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ);
+extern SchemeObject* SetSymbol;
+
+extern char IsAssignment(SchemeObject* exp);
+
+extern SchemeObject* AssignmentVariable(SchemeObject* exp);
+
+extern SchemeObject* AssignmentValue(SchemeObject* exp);
 
 #endif //SCHEME_C_ASSIGNMENT_H

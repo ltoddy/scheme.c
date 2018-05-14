@@ -29,6 +29,12 @@ typedef struct SchemeObject {
     } data;
 } SchemeObject;
 
+extern SchemeObject* True;
+extern SchemeObject* False;
+extern SchemeObject* TheEmptyList;
+extern SchemeObject* SymbolTable;
+extern SchemeObject* QuoteSymbol;
+
 extern SchemeObject* AllocObject();
 
 extern SchemeObject* MakeFixnum(long value);
@@ -66,5 +72,7 @@ extern void SetCdr(SchemeObject* pair, SchemeObject* value);
 extern SchemeObject* MakeSymbol(char* value);
 
 extern char IsSymbol(SchemeObject* obj);
+
+extern char IsQuote(SchemeObject* exp);
 
 #endif //SCHEME_C_OBJECT_H
