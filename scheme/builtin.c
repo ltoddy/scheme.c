@@ -3,6 +3,7 @@
 #include "define.h"
 #include "assignment.h"
 #include "if.h"
+#include "procedure.h"
 
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;
@@ -38,4 +39,8 @@ void InitScheme()
 
     TheEmptyEnvironment = TheEmptyList;
     TheGlobalEnvironment = SetupEnvironment();
+
+    DefineVariable(MakeSymbol("+"),
+                   MakePrimitiveProc(AddProcedure),
+                   TheGlobalEnvironment);
 }

@@ -12,8 +12,6 @@ $ ./scheme_c
 Welcome to Scheme. Use ctrl-c to exit.
 > #t
 #t
-> -123
--123
 > #\c
 #\c
 > "abc"
@@ -36,5 +34,7 @@ ok
 1
 > (if #f 1 2)
 2
+> (+ 4 5 6)
+15
 > ^C
 ```
