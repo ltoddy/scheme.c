@@ -36,4 +36,65 @@ extern SchemeObject* OkSymbol;
 
 extern void InitScheme();
 
+// primitive procedure
+extern SchemeObject* AddProcedure(SchemeObject* arguments); /* + */
+
+extern SchemeObject* SubProcedure(SchemeObject* arguments); /* - */
+
+extern SchemeObject* MulProcedure(SchemeObject* arguments); /* * */
+
+extern SchemeObject* QuotientProcedure(SchemeObject* arguments); /* quotient */
+
+extern SchemeObject* RemainderProcedure(SchemeObject* arguments); /* remainder */
+
+extern SchemeObject* IsNumberEqualProcedure(SchemeObject* arguments); /* = */
+
+extern SchemeObject* IsLessThanProcedure(SchemeObject* arguments); /* < */
+
+extern SchemeObject* IsGreaterThanProcedure(SchemeObject* arguments); /* > */
+
+extern SchemeObject* ConsProcedure(SchemeObject* arguments); /* (cons ...) */
+
+extern SchemeObject* CarProcedure(SchemeObject* arguments); /* (car ...) */
+
+extern SchemeObject* CdrProcedure(SchemeObject* arguments); /* (cdr ...) */
+
+extern SchemeObject* SetCarProcedure(SchemeObject* arguments); /* (set-car! ...) */
+
+extern SchemeObject* SetCdrProcedure(SchemeObject* arguments); /* (set-cdr! ...) */
+
+extern SchemeObject* ListProcedure(SchemeObject* arguments); /* (list ...) */
+
+extern SchemeObject* IsEqProcedure(SchemeObject* arguments); /* (eq? ...) */
+
+extern SchemeObject* IsNullProcedure(SchemeObject* arguments); /* (null? ...) */
+
+extern SchemeObject* IsBooleanProcedure(SchemeObject* arguments); /* (boolean? ...) */
+
+extern SchemeObject* IsSymbolProcedure(SchemeObject* arguments); /* (symbol? ...) */
+
+extern SchemeObject* IsIntegerProcedure(SchemeObject* arguments); /* (integer? ...) */
+
+extern SchemeObject* IsCharProcedure(SchemeObject* arguments); /* (char? ...) */
+
+extern SchemeObject* IsStringProcedure(SchemeObject* arguments); /* (string? ...) */
+
+extern SchemeObject* IsPairProcedure(SchemeObject* arguments); /* (pair? ...) */
+
+extern SchemeObject* IsProcedureProcedure(SchemeObject* arguments); /* (procedure? ...) */
+
+extern SchemeObject* NumberToStringProcedure(SchemeObject* arguments); /* (number->string ...) */
+
+extern SchemeObject* StringToNumberProcedure(SchemeObject* arguments); /* (string->number ...) */
+
+extern SchemeObject* SymbolToStringProcedure(SchemeObject* arguments); /* (symbol->string ...) */
+
+extern SchemeObject* StringToSymbolProcedure(SchemeObject* arguments); /* (string->symbol ...) */
+
+extern SchemeObject* CharToIntegerProcedure(SchemeObject* arguments); /* (char->integer ...) */
+
+extern SchemeObject* IntegerToCharProcedure(SchemeObject* arguments); /* (integer->char ...) */
+
+// end primitive procedure
+
 #endif //SCHEME_C_BUILTIN_H

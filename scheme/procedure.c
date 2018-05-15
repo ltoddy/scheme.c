@@ -17,18 +17,6 @@ char IsPrimitiveProc(SchemeObject* obj)
     return obj->type == PRIMITIVE_PROCEDURE;
 }
 
-/* (+ 1 2 3) + procedure */
-SchemeObject* AddProcedure(SchemeObject* arguments)
-{
-    long result = 0;
-
-    while (!IsTheEmptyList(arguments)) {
-        result += (Car(arguments))->data.fixnum.value;
-        arguments = Cdr(arguments);
-    }
-    return MakeFixnum(result);
-}
-
 char IsApplication(SchemeObject* exp)
 {
     return IsPair(exp);
