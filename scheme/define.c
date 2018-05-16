@@ -2,6 +2,7 @@
 #include "environment.h"
 #include "predicate.h"
 #include "builtin.h"
+#include "lambda.h"
 
 char IsDefine(SchemeObject* exp)
 {
@@ -27,10 +28,18 @@ void DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
 
 SchemeObject* DefinitionVariable(SchemeObject* exp)
 {
-    return CADR(exp);
+    if (IsSymbol(CADR(exp))) {
+        return CADR(exp);
+    } else {
+        return CAADR(exp);
+    }
 }
 
 SchemeObject* DefinitionValue(SchemeObject* exp)
 {
-    return CADDR(exp);
+    if (IsSymbol(CADR(exp))) {
+        return CADDR(exp);
+    } else {
+        return MakeLambda(CDADR(exp), CDDR(exp));
+    }
 }

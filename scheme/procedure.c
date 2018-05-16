@@ -8,7 +8,7 @@ SchemeObject* MakePrimitiveProc(SchemeObject* (* fn)(SchemeObject* arguments))
 {
     SchemeObject* obj = AllocObject();
     obj->type = PRIMITIVE_PROCEDURE;
-    obj->data.primitive_poc.fn = fn;
+    obj->data.primitive_proc.fn = fn;
     return obj;
 }
 

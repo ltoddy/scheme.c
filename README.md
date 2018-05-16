@@ -10,12 +10,18 @@ $ cmake .
 $ make
 $ ./scheme_c
 Welcome to Scheme. Use ctrl-c to exit.
-> #t
-#t
-> #\c
-#\c
-> "abc"
-"abc"
+> (define (sum x y) (+ x y))
+ok
+> (sum 10 20)
+30
+> ((lambda (x) x) 1)
+1
+> sum
+#<procedure>
+> (define c ((lambda (x) (lambda () x)) 3))
+ok
+> (c)
+3
 > (quote ())
 ()
 > (quote (0 . 1))

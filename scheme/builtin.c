@@ -19,8 +19,9 @@ SchemeObject* DefineSymbol = NULL;
 SchemeObject* SetSymbol = NULL;
 SchemeObject* OkSymbol = NULL;
 SchemeObject* IfSymbol = NULL;
+SchemeObject* LambdaSymbol = NULL;
 
-#define ADDPROCEDURE(scheme_name, c_name) \
+#define ADD_PRIMITIVE(scheme_name, c_name) \
     DefineVariable(MakeSymbol(scheme_name), MakePrimitiveProc(c_name), TheGlobalEnvironment);
 
 void InitScheme()
@@ -42,42 +43,44 @@ void InitScheme()
     SetSymbol = MakeSymbol("set!");
     OkSymbol = MakeSymbol("ok");
     IfSymbol = MakeSymbol("if");
+    LambdaSymbol = MakeSymbol("lambda");
 
     TheEmptyEnvironment = TheEmptyList;
     TheGlobalEnvironment = SetupEnvironment();
 
     // builtin procedure
-    ADDPROCEDURE("+", AddProcedure)
-    ADDPROCEDURE("-", SubProcedure)
-    ADDPROCEDURE("*", MulProcedure)
-    ADDPROCEDURE("quotient", QuotientProcedure)
-    ADDPROCEDURE("remainder", RemainderProcedure)
-    ADDPROCEDURE("=", IsNumberEqualProcedure)
-    ADDPROCEDURE("<", IsLessThanProcedure)
-    ADDPROCEDURE(">", IsGreaterThanProcedure)
-    ADDPROCEDURE("cons", ConsProcedure)
-    ADDPROCEDURE("car", CarProcedure)
-    ADDPROCEDURE("cdr", CdrProcedure)
-    ADDPROCEDURE("set-car!", SetCarProcedure)
-    ADDPROCEDURE("set-cdr!", SetCdrProcedure)
-    ADDPROCEDURE("list", ListProcedure)
-    ADDPROCEDURE("eq?", IsEqProcedure)
-    ADDPROCEDURE("null?", IsNullProcedure)
-    ADDPROCEDURE("boolean?", IsBooleanProcedure)
-    ADDPROCEDURE("symbol?", IsSymbolProcedure)
-    ADDPROCEDURE("integer?", IsIntegerProcedure)
-    ADDPROCEDURE("char?", IsCharProcedure)
-    ADDPROCEDURE("string?", IsStringProcedure)
-    ADDPROCEDURE("pair?", IsPairProcedure)
-    ADDPROCEDURE("procedure?", IsProcedureProcedure)
-    ADDPROCEDURE("number->string", NumberToStringProcedure)
-    ADDPROCEDURE("string->number", StringToNumberProcedure)
-    ADDPROCEDURE("symbol->string", SymbolToStringProcedure)
-    ADDPROCEDURE("string->symbol", StringToSymbolProcedure)
-    ADDPROCEDURE("char->integer", CharToIntegerProcedure)
-    ADDPROCEDURE("integer->char", IntegerToCharProcedure)
+    ADD_PRIMITIVE("+", AddProcedure)
+    ADD_PRIMITIVE("-", SubProcedure)
+    ADD_PRIMITIVE("*", MulProcedure)
+    ADD_PRIMITIVE("quotient", QuotientProcedure)
+    ADD_PRIMITIVE("remainder", RemainderProcedure)
+    ADD_PRIMITIVE("=", IsNumberEqualProcedure)
+    ADD_PRIMITIVE("<", IsLessThanProcedure)
+    ADD_PRIMITIVE(">", IsGreaterThanProcedure)
+    ADD_PRIMITIVE("cons", ConsProcedure)
+    ADD_PRIMITIVE("car", CarProcedure)
+    ADD_PRIMITIVE("cdr", CdrProcedure)
+    ADD_PRIMITIVE("set-car!", SetCarProcedure)
+    ADD_PRIMITIVE("set-cdr!", SetCdrProcedure)
+    ADD_PRIMITIVE("list", ListProcedure)
+    ADD_PRIMITIVE("eq?", IsEqProcedure)
+    ADD_PRIMITIVE("null?", IsNullProcedure)
+    ADD_PRIMITIVE("boolean?", IsBooleanProcedure)
+    ADD_PRIMITIVE("symbol?", IsSymbolProcedure)
+    ADD_PRIMITIVE("integer?", IsIntegerProcedure)
+    ADD_PRIMITIVE("char?", IsCharProcedure)
+    ADD_PRIMITIVE("string?", IsStringProcedure)
+    ADD_PRIMITIVE("pair?", IsPairProcedure)
+    ADD_PRIMITIVE("procedure?", IsProcedureProcedure)
+    ADD_PRIMITIVE("number->string", NumberToStringProcedure)
+    ADD_PRIMITIVE("string->number", StringToNumberProcedure)
+    ADD_PRIMITIVE("symbol->string", SymbolToStringProcedure)
+    ADD_PRIMITIVE("string->symbol", StringToSymbolProcedure)
+    ADD_PRIMITIVE("char->integer", CharToIntegerProcedure)
+    ADD_PRIMITIVE("integer->char", IntegerToCharProcedure)
 }
 
+/* ---------------- end primitive procedure ---------------- */
 SchemeObject* AddProcedure(SchemeObject* arguments) /* + */
 {
     long result = 0;
@@ -254,7 +257,9 @@ SchemeObject* IsPairProcedure(SchemeObject* arguments) /* (pair? ...) */
 
 SchemeObject* IsProcedureProcedure(SchemeObject* arguments) /* (procedure? ...) */
 {
-    return IsPrimitiveProc(Car(arguments)) ? True : False;
+    SchemeObject* obj = Car(arguments);
+
+    return (IsPrimitiveProc(obj)) || (IsCompoundProc(obj)) ? True : False;
 }
 
 SchemeObject* NumberToStringProcedure(SchemeObject* arguments) /* (number->string ...) */
@@ -289,3 +294,24 @@ SchemeObject* IntegerToCharProcedure(SchemeObject* arguments) /* (integer->char 
 {
     return MakeCharacter((char) Car(arguments)->data.fixnum.value);
 }
+/* ---------------- end primitive procedure ---------------- */
+
+
+/* ---------------- compound procedure ---------------- */
+SchemeObject* MakeCompoundProc(SchemeObject* parameters, SchemeObject* body, SchemeObject* env)
+{
+    SchemeObject* obj = AllocObject();
+
+    obj->type = COMPOUND_PROCEDURE;
+    obj->data.compound_proc.parameters = parameters;
+    obj->data.compound_proc.body = body;
+    obj->data.compound_proc.env = env;
+
+    return obj;
+}
+
+extern char IsCompoundProc(SchemeObject* obj)
+{
+    return obj->type == COMPOUND_PROCEDURE;
+}
+/* ---------------- end compound procedure ---------------- */

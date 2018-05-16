@@ -34,7 +34,7 @@ void AddBindingToFrame(SchemeObject* var, SchemeObject* val, SchemeObject* frame
     SetCdr(frame, Cons(val, Cdr(frame)));
 }
 
-static SchemeObject* ExtendEnvironment(SchemeObject* var, SchemeObject* val, SchemeObject* base_environ)
+SchemeObject* ExtendEnvironment(SchemeObject* var, SchemeObject* val, SchemeObject* base_environ)
 {
     return Cons(MakeFrame(var, val), base_environ);
 }
