@@ -14,6 +14,8 @@ extern SchemeObject* FrameValues(SchemeObject* frame);
 
 extern void AddBindingToFrame(SchemeObject* var, SchemeObject* val, SchemeObject* frame);
 
+extern SchemeObject* ExtendEnvironment(SchemeObject* var, SchemeObject* val, SchemeObject* base_environ);
+
 extern SchemeObject* LookupVariableValue(SchemeObject* var, SchemeObject* environ);
 
 extern void SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject* environ);
