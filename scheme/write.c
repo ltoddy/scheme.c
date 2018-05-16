@@ -79,6 +79,7 @@ void Write(SchemeObject* obj)
             printf("()");
             break;
         case PRIMITIVE_PROCEDURE:
+        case COMPOUND_PROCEDURE:
             printf("#<procedure>");
             break;
         default:
