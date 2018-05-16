@@ -1,3 +1,21 @@
+## compound procedures
+
+```
+> (define (sum x y) (+ x y))
+ok
+> (sum 10 20)
+30
+> ((lambda (x) x) 1)
+1
+> sum
+#<procedure>
+> (define c ((lambda (x) (lambda () x)) 3))
+ok
+> (c)
+3
+```
+
+
 ## primitive procedures
 
 * null?
