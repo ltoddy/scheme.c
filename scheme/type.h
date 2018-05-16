@@ -8,7 +8,8 @@ typedef enum {
     STRING,
     THE_EMPTY_LIST,
     PAIR, SYMBOL,
-    PRIMITIVE_PROCEDURE
+    PRIMITIVE_PROCEDURE,
+    COMPOUND_PROCEDURE
 } SchemeObjectType;
 
 #endif //SCHEME_C_TYPE_H
