@@ -36,7 +36,7 @@ extern SchemeObject* OkSymbol;
 
 extern void InitScheme();
 
-// primitive procedure
+/* ---------------- primitive procedure ---------------- */
 extern SchemeObject* AddProcedure(SchemeObject* arguments); /* + */
 
 extern SchemeObject* SubProcedure(SchemeObject* arguments); /* - */
@@ -95,6 +95,14 @@ extern SchemeObject* CharToIntegerProcedure(SchemeObject* arguments); /* (char->
 
 extern SchemeObject* IntegerToCharProcedure(SchemeObject* arguments); /* (integer->char ...) */
 
-// end primitive procedure
+/* ---------------- end primitive procedure ---------------- */
+
+
+/* ---------------- compound procedure ---------------- */
+extern SchemeObject* MakeCompoundProc(SchemeObject* parameters, SchemeObject* body, SchemeObject* env);
+
+extern char IsCompoundProc(SchemeObject* obj);
+
+/* ---------------- end compound procedure ---------------- */
 
 #endif //SCHEME_C_BUILTIN_H
