@@ -10,6 +10,7 @@
 #include "predicate.h"
 #include "procedure.h"
 #include "lambda.h"
+#include "begin.h"
 
 static SchemeObject* TextOfQuotation(SchemeObject* exp)
 {
@@ -59,6 +60,16 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
         goto call;
     } else if (IsLambda(exp)) {
         return MakeCompoundProc(LambdaParameters(exp), LambdaBody(exp), environ);
+    } else if (IsBegin(exp)) {
+        exp = BeginAction(exp);
+
+        while (!IsLastExp(exp)) {
+            Eval(FirstExp(exp), environ);
+            exp = RestExps(exp);
+        }
+        exp = FirstExp(exp);
+
+        goto call;
     } else if (IsApplication(exp)) {
         procedure = Eval(Operator(exp), environ);
         arguments = ListOfValues(Operands(exp), environ);
@@ -69,12 +80,7 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
             environ = ExtendEnvironment(procedure->data.compound_proc.parameters,
                                         arguments,
                                         procedure->data.compound_proc.env);
-            exp = procedure->data.compound_proc.body;
-            while (!IsLastExp(exp)) {
-                Eval(FirstExp(exp), environ);
-                exp = RestExps(exp);
-            }
-            exp = FirstExp(exp);
+            exp = MakeBegin(procedure->data.compound_proc.body);
             goto call;
         } else {
             fprintf(stderr, "unknown procedure type.\n");
