@@ -20,6 +20,7 @@ SchemeObject* SetSymbol = NULL;
 SchemeObject* OkSymbol = NULL;
 SchemeObject* IfSymbol = NULL;
 SchemeObject* LambdaSymbol = NULL;
+SchemeObject* BeginSymbol = NULL;
 
 #define ADD_PRIMITIVE(scheme_name, c_name) \
     DefineVariable(MakeSymbol(scheme_name), MakePrimitiveProc(c_name), TheGlobalEnvironment);
@@ -44,6 +45,7 @@ void InitScheme()
     OkSymbol = MakeSymbol("ok");
     IfSymbol = MakeSymbol("if");
     LambdaSymbol = MakeSymbol("lambda");
+    BeginSymbol = MakeSymbol("begin");
 
     TheEmptyEnvironment = TheEmptyList;
     TheGlobalEnvironment = SetupEnvironment();
