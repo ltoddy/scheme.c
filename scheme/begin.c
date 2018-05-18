@@ -1,9 +1,9 @@
 #include "begin.h"
 #include "predicate.h"
 
-SchemeObject* MakeBegin(SchemeObject* exp)
+SchemeObject* MakeBegin(SchemeObject* seq)
 {
-    return Cons(BeginSymbol, exp);
+    return Cons(BeginSymbol, seq);
 }
 
 char IsBegin(SchemeObject* exp)

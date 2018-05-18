@@ -11,6 +11,7 @@
 #include "procedure.h"
 #include "lambda.h"
 #include "begin.h"
+#include "cond.h"
 
 static SchemeObject* TextOfQuotation(SchemeObject* exp)
 {
@@ -69,6 +70,9 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
         }
         exp = FirstExp(exp);
 
+        goto call;
+    } else if(IsCond(exp)) {
+        exp = CondToIf(exp);
         goto call;
     } else if (IsApplication(exp)) {
         procedure = Eval(Operator(exp), environ);

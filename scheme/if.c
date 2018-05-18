@@ -12,6 +12,14 @@ char IsIf(SchemeObject* exp)
     return IsTaggedList(exp, IfSymbol);
 }
 
+SchemeObject* MakeIf(SchemeObject* predicate, SchemeObject* consequent, SchemeObject* alternative)
+{
+    return Cons(IfSymbol,
+                Cons(predicate,
+                     Cons(consequent,
+                          Cons(alternative, TheEmptyList))));
+}
+
 SchemeObject* IfPredicate(SchemeObject* exp)
 {
     return CADR(exp);

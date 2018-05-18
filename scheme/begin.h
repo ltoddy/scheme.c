@@ -5,7 +5,7 @@
 
 extern SchemeObject* BeginSymbol;
 
-extern SchemeObject* MakeBegin(SchemeObject* exp);
+extern SchemeObject* MakeBegin(SchemeObject* seq);
 
 extern char IsBegin(SchemeObject* exp);
 

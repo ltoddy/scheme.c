@@ -7,6 +7,8 @@ extern SchemeObject* IfSymbol;
 
 extern char IsIf(SchemeObject* exp);
 
+extern SchemeObject* MakeIf(SchemeObject* predicate, SchemeObject* consequent, SchemeObject* alternative);
+
 extern SchemeObject* IfPredicate(SchemeObject* exp);
 
 extern SchemeObject* IfConsequent(SchemeObject* exp);
