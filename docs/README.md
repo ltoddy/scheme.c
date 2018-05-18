@@ -203,3 +203,9 @@ ok
 > (eq? o1 o2)
 #t
 ```
+
+* begin
+```scheme
+> (begin 1 2)
+2
+```
