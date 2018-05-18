@@ -7,6 +7,7 @@
 #include "if.h"
 #include "procedure.h"
 #include "object.h"
+#include "cond.h"
 
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;
@@ -21,6 +22,8 @@ SchemeObject* OkSymbol = NULL;
 SchemeObject* IfSymbol = NULL;
 SchemeObject* LambdaSymbol = NULL;
 SchemeObject* BeginSymbol = NULL;
+SchemeObject* CondSymbol = NULL;
+SchemeObject* ElseSymbol = NULL;
 
 #define ADD_PRIMITIVE(scheme_name, c_name) \
     DefineVariable(MakeSymbol(scheme_name), MakePrimitiveProc(c_name), TheGlobalEnvironment);
@@ -46,6 +49,8 @@ void InitScheme()
     IfSymbol = MakeSymbol("if");
     LambdaSymbol = MakeSymbol("lambda");
     BeginSymbol = MakeSymbol("begin");
+    CondSymbol = MakeSymbol("cond");
+    ElseSymbol = MakeSymbol("else");
 
     TheEmptyEnvironment = TheEmptyList;
     TheGlobalEnvironment = SetupEnvironment();

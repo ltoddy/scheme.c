@@ -20,4 +20,5 @@ add_executable(
         scheme/procedure.c scheme/procedure.h
         scheme/lambda.c scheme/lambda.h
         scheme/begin.c scheme/begin.h
+        scheme/cond.c scheme/cond.h
 )
