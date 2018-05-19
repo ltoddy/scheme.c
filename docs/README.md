@@ -209,3 +209,9 @@ ok
 > (begin 1 2)
 2
 ```
+
+* cond
+```scheme
+> (cond (#f 'false) (else 'true))
+true
+```
