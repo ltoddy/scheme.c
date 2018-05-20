@@ -17,6 +17,11 @@ char IsPrimitiveProc(SchemeObject* obj)
     return obj->type == PRIMITIVE_PROCEDURE;
 }
 
+SchemeObject* MakeApplication(SchemeObject* operator, SchemeObject* operands)
+{
+    return Cons(operator, operands);
+}
+
 char IsApplication(SchemeObject* exp)
 {
     return IsPair(exp);
