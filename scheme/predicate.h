@@ -3,6 +3,17 @@
 
 #include "object.h"
 
+extern SchemeObject* AndSymbol;
+extern SchemeObject* OrSymbol;
+
+extern char IsAnd(SchemeObject* exp);
+
+extern SchemeObject* AndTests(SchemeObject* exp);
+
+extern char IsOr(SchemeObject* exp);
+
+extern SchemeObject* OrTests(SchemeObject* exp);
+
 extern char IsTaggedList(SchemeObject* exp, SchemeObject* tag);
 
 extern char IsSelfEvaluating(SchemeObject* exp);

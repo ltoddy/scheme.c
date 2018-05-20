@@ -45,8 +45,9 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
 {
     SchemeObject* procedure;
     SchemeObject* arguments;
+    SchemeObject* result;
 
-    call:
+    tail:
     if (IsSelfEvaluating(exp)) {
         return exp;
     } else if (IsVariable(exp)) {
@@ -59,7 +60,7 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
         return EvalDefinition(exp, environ);
     } else if (IsIf(exp)) {
         exp = IsTrue(Eval(IfPredicate(exp), environ)) ? IfConsequent(exp) : IfAlternative(exp);
-        goto call;
+        goto tail;
     } else if (IsLambda(exp)) {
         return MakeCompoundProc(LambdaParameters(exp), LambdaBody(exp), environ);
     } else if (IsBegin(exp)) {
@@ -71,13 +72,41 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
         }
         exp = FirstExp(exp);
 
-        goto call;
+        goto tail;
     } else if (IsCond(exp)) {
         exp = CondToIf(exp);
-        goto call;
+        goto tail;
     } else if (IsLet(exp)) {
         exp = LetToApplication(exp);
-        goto call;
+        goto tail;
+    } else if (IsAnd(exp)) {
+        exp = AndTests(exp);
+        if (IsTheEmptyList(exp)) {
+            return True;
+        }
+        while (!IsLastExp(exp)) {
+            result = Eval(FirstExp(exp), environ);
+            if (IsFalse(result)) {
+                return False;
+            }
+            exp = RestExps(exp);
+        }
+        exp = FirstExp(exp);
+        goto tail;
+    } else if (IsOr(exp)) {
+        exp = OrTests(exp);
+        if (IsTheEmptyList(exp)) {
+            return False;
+        }
+        while (!IsLastExp(exp)) {
+            result = Eval(FirstExp(exp), environ);
+            if (IsTrue(result)) {
+                return True;
+            }
+            exp = RestExps(exp);
+        }
+        exp = FirstExp(exp);
+        goto tail;
     } else if (IsApplication(exp)) {
         procedure = Eval(Operator(exp), environ);
         arguments = ListOfValues(Operands(exp), environ);
@@ -89,7 +118,7 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
                                         arguments,
                                         procedure->data.compound_proc.env);
             exp = MakeBegin(procedure->data.compound_proc.body);
-            goto call;
+            goto tail;
         } else {
             fprintf(stderr, "unknown procedure type.\n");
             exit(1);
