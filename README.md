@@ -27,6 +27,10 @@ $ cmake .
 $ make
 $ ./scheme_c
 Welcome to Scheme. Use ctrl-c to exit.
+> (let ((x (+ 1 1))
+        (y (- 5 2)))
+       (+ x y))
+5
 > (define (sum x y) (+ x y))
 ok
 > (sum 10 20)

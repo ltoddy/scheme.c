@@ -7,6 +7,8 @@ extern SchemeObject* MakePrimitiveProc(SchemeObject* (* fn)(SchemeObject* argume
 
 extern char IsPrimitiveProc(SchemeObject* obj);
 
+extern SchemeObject* MakeApplication(SchemeObject* operator, SchemeObject* operands);
+
 extern char IsApplication(SchemeObject* exp);
 
 extern SchemeObject* Operator(SchemeObject* exp);
