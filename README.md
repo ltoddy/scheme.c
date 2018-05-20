@@ -27,6 +27,8 @@ $ cmake .
 $ make
 $ ./scheme_c
 Welcome to Scheme. Use ctrl-c to exit.
+> (apply + '(1 2 3))
+6
 > (and 1 2 #f 3)
 #f
 >  (or #f #f 3 #f)

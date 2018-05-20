@@ -10,6 +10,7 @@
 #include "cond.h"
 #include "let.h"
 #include "predicate.h"
+#include "apply.h"
 
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;
@@ -94,6 +95,7 @@ void InitScheme()
     ADD_PRIMITIVE("string->symbol", StringToSymbolProcedure)
     ADD_PRIMITIVE("char->integer", CharToIntegerProcedure)
     ADD_PRIMITIVE("integer->char", IntegerToCharProcedure)
+    ADD_PRIMITIVE("apply", ApplyProc)
 }
 
 /* ---------------- end primitive procedure ---------------- */

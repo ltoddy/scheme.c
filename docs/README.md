@@ -232,3 +232,9 @@ true
 >  (or #f #f 3 #f)
 #t
 ```
+
+* apply
+```scheme
+> (apply + '(1 2 3))
+6
+```

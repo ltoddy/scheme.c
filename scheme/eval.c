@@ -13,6 +13,7 @@
 #include "begin.h"
 #include "cond.h"
 #include "let.h"
+#include "apply.h"
 
 static SchemeObject* TextOfQuotation(SchemeObject* exp)
 {
@@ -110,6 +111,12 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
     } else if (IsApplication(exp)) {
         procedure = Eval(Operator(exp), environ);
         arguments = ListOfValues(Operands(exp), environ);
+
+        /* handle apply specially for tail call requirement */
+        if (IsPrimitiveProc(procedure) && procedure->data.primitive_proc.fn == ApplyProc) {
+            procedure = ApplyOperator(arguments);
+            arguments = ApplyOperands(arguments);
+        }
 
         if (IsPrimitiveProc(procedure)) {
             return (procedure->data.primitive_proc.fn)(arguments);
