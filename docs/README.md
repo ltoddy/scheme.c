@@ -215,3 +215,11 @@ ok
 > (cond (#f 'false) (else 'true))
 true
 ```
+
+* let
+```scheme
+> (let ((x (+ 1 1))
+        (y (- 5 2)))
+       (+ x y))
+5
+```
