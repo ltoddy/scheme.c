@@ -27,6 +27,10 @@ $ cmake .
 $ make
 $ ./scheme_c
 Welcome to Scheme. Use ctrl-c to exit.
+> (and 1 2 #f 3)
+#f
+>  (or #f #f 3 #f)
+#t
 > (let ((x (+ 1 1))
         (y (- 5 2)))
        (+ x y))

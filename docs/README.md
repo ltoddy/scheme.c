@@ -223,3 +223,12 @@ true
        (+ x y))
 5
 ```
+
+* and
+* or
+```scheme
+> (and 1 2 #f 3)
+#f
+>  (or #f #f 3 #f)
+#t
+```
