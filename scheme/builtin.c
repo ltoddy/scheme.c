@@ -31,38 +31,10 @@ SchemeObject* LetSymbol = NULL;
 SchemeObject* AndSymbol = NULL;
 SchemeObject* OrSymbol = NULL;
 
-#define ADD_PRIMITIVE(scheme_name, c_name) \
-    DefineVariable(MakeSymbol(scheme_name), MakePrimitiveProc(c_name), TheGlobalEnvironment);
-
-void InitScheme()
+void PopulateEnvironment(SchemeObject* env)
 {
-    True = AllocObject();
-    True->type = BOOLEAN;
-    True->data.boolean.value = 1;
-
-    False = AllocObject();
-    False->type = BOOLEAN;
-    False->data.boolean.value = 0;
-
-    TheEmptyList = AllocObject();
-    TheEmptyList->type = THE_EMPTY_LIST;
-    SymbolTable = TheEmptyList;
-    QuoteSymbol = MakeSymbol("quote");
-
-    DefineSymbol = MakeSymbol("define");
-    SetSymbol = MakeSymbol("set!");
-    OkSymbol = MakeSymbol("ok");
-    IfSymbol = MakeSymbol("if");
-    LambdaSymbol = MakeSymbol("lambda");
-    BeginSymbol = MakeSymbol("begin");
-    CondSymbol = MakeSymbol("cond");
-    ElseSymbol = MakeSymbol("else");
-    LetSymbol = MakeSymbol("let");
-    AndSymbol = MakeSymbol("and");
-    OrSymbol = MakeSymbol("or");
-
-    TheEmptyEnvironment = TheEmptyList;
-    TheGlobalEnvironment = SetupEnvironment();
+#define ADD_PRIMITIVE(scheme_name, c_name) \
+    DefineVariable(MakeSymbol(scheme_name), MakePrimitiveProc(c_name), env);
 
     // builtin procedure
     ADD_PRIMITIVE("+", AddProcedure)
@@ -96,6 +68,41 @@ void InitScheme()
     ADD_PRIMITIVE("char->integer", CharToIntegerProcedure)
     ADD_PRIMITIVE("integer->char", IntegerToCharProcedure)
     ADD_PRIMITIVE("apply", ApplyProc)
+    ADD_PRIMITIVE("interaction-environment", InteractionEnvironmentProc);
+    ADD_PRIMITIVE("null-environment", NullEnvironmentProc);
+    ADD_PRIMITIVE("environment", EnvironemntProc);
+    ADD_PRIMITIVE("eval", EvalProc)
+}
+
+void InitScheme()
+{
+    True = AllocObject();
+    True->type = BOOLEAN;
+    True->data.boolean.value = 1;
+
+    False = AllocObject();
+    False->type = BOOLEAN;
+    False->data.boolean.value = 0;
+
+    TheEmptyList = AllocObject();
+    TheEmptyList->type = THE_EMPTY_LIST;
+    SymbolTable = TheEmptyList;
+
+    QuoteSymbol = MakeSymbol("quote");
+    DefineSymbol = MakeSymbol("define");
+    SetSymbol = MakeSymbol("set!");
+    OkSymbol = MakeSymbol("ok");
+    IfSymbol = MakeSymbol("if");
+    LambdaSymbol = MakeSymbol("lambda");
+    BeginSymbol = MakeSymbol("begin");
+    CondSymbol = MakeSymbol("cond");
+    ElseSymbol = MakeSymbol("else");
+    LetSymbol = MakeSymbol("let");
+    AndSymbol = MakeSymbol("and");
+    OrSymbol = MakeSymbol("or");
+
+    TheEmptyEnvironment = TheEmptyList;
+    TheGlobalEnvironment = MakeEnvironment();
 }
 
 /* ---------------- end primitive procedure ---------------- */
