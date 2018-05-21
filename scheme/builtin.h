@@ -34,6 +34,8 @@
 
 extern SchemeObject* OkSymbol;
 
+extern void PopulateEnvironment(SchemeObject* env);
+
 extern void InitScheme();
 
 /* ---------------- primitive procedure ---------------- */

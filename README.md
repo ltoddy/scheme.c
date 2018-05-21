@@ -25,7 +25,7 @@
 ```
 $ cmake .
 $ make
-$ ./scheme_c
+$ ./scheme.c
 Welcome to Scheme. Use ctrl-c to exit.
 > (apply + '(1 2 3))
 6
@@ -69,6 +69,12 @@ ok
 2
 > (+ 4 5 6)
 15
+> (define env (environment))
+ok
+> (eval '(define a 250) env)
+ok
+> (eval 'a env)
+250
 > ^C
 ```
 

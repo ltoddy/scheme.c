@@ -32,6 +32,16 @@ static SchemeObject* EvalDefinition(SchemeObject* exp, SchemeObject* environ)
     return OkSymbol;
 }
 
+static SchemeObject* EvalExpression(SchemeObject* arguments)
+{
+    return Car(arguments);
+}
+
+static SchemeObject* EvalEnvironment(SchemeObject* arguments)
+{
+    return CADR(arguments);
+}
+
 SchemeObject* ListOfValues(SchemeObject* exps, SchemeObject* environ)
 {
     if (IsNoOperands(exps)) {
@@ -111,6 +121,13 @@ SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
     } else if (IsApplication(exp)) {
         procedure = Eval(Operator(exp), environ);
         arguments = ListOfValues(Operands(exp), environ);
+
+        /* handle eval specially for tail call requirement */
+        if (IsPrimitiveProc(procedure) && procedure->data.primitive_proc.fn == EvalProc) {
+            exp = EvalExpression(arguments);
+            environ = EvalEnvironment(arguments);
+            goto tail;
+        }
 
         /* handle apply specially for tail call requirement */
         if (IsPrimitiveProc(procedure) && procedure->data.primitive_proc.fn == ApplyProc) {

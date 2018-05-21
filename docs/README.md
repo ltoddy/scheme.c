@@ -238,3 +238,13 @@ true
 > (apply + '(1 2 3))
 6
 ```
+
+* eval
+```scheme
+> (define env (environment))
+ok
+> (eval '(define a 250) env)
+ok
+> (eval 'a env)
+250
+```
