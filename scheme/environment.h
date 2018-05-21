@@ -22,4 +22,14 @@ extern void SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject*
 
 extern SchemeObject* SetupEnvironment();
 
+extern SchemeObject* InteractionEnvironmentProc(SchemeObject* arguments);
+
+extern SchemeObject* NullEnvironmentProc(SchemeObject* arguments);
+
+extern SchemeObject* EnvironemntProc(SchemeObject* arguments);
+
+extern SchemeObject* MakeEnvironment();
+
+extern SchemeObject* EvalProc(SchemeObject* arguments);
+
 #endif //SCHEME_C_ENVIRONMENT_H

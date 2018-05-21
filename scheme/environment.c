@@ -83,3 +83,32 @@ SchemeObject* SetupEnvironment()
     SchemeObject* initial_env = ExtendEnvironment(TheEmptyList, TheEmptyList, TheEmptyEnvironment);
     return initial_env;
 }
+
+SchemeObject* InteractionEnvironmentProc(SchemeObject* arguments)
+{
+    return TheGlobalEnvironment;
+}
+
+SchemeObject* NullEnvironmentProc(SchemeObject* arguments)
+{
+    return SetupEnvironment();
+}
+
+SchemeObject* MakeEnvironment()
+{
+    SchemeObject* env;
+    env = SetupEnvironment();
+    PopulateEnvironment(env);
+    return env;
+}
+
+SchemeObject* EnvironemntProc(SchemeObject* arguments)
+{
+    return MakeEnvironment();
+}
+
+SchemeObject* EvalProc(SchemeObject* arguments)
+{
+    fprintf(stderr, "illagel state: The body of the eval primitive should not execute.\n");
+    exit(1);
+}
