@@ -5,8 +5,6 @@
 
 *来源SICP(Structure and Interpretation of Computer Programs)第四章开始的元解释器的教学*
 
-[![Quick Start](https://asciinema.org/a/182758.png)](https://asciinema.org/a/182758)
-
 ## Overview
 
     程序设计语言的设计不应该是特征的堆砌,而应消除那些需要依赖于多余特征的弱点和局限.
@@ -24,12 +22,16 @@
     最近,Scheme成为了第一种支持卫生宏(hygienic macro)的程序设计语言,
     该机制允许我们以一种一致和可靠的方式扩展块结构语言的语法.
 
+### Quick Start
+
+[![Quick Start](https://asciinema.org/a/182762.png)](https://asciinema.org/a/182762)
+
 ### usage
 
 ```
 $ cmake .
 $ make
-$ ./scheme.c
+$ ./bin/scheme
 Welcome to Scheme. Use ctrl-c to exit.
 > (apply + '(1 2 3))
 6

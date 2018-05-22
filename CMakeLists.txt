@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.10)
-project(scheme_c C)
+project(scheme.c C)
 
 set(CMAKE_C_STANDARD 90)
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ./bin/)
+
 add_executable(
-        scheme_c
+        scheme
         main.c
         scheme/object.c      scheme/object.h
         scheme/type.c        scheme/type.h
