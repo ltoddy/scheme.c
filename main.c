@@ -11,7 +11,7 @@ int main()
 
     printf("Welcome to Scheme. Use ctrl-c to exit.\n");
 
-    while (1) {
+    for (;;) {
         printf("> ");
         Write(Eval(Read(stdin), TheGlobalEnvironment));
         printf("\n");
