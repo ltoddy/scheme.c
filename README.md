@@ -24,7 +24,9 @@
 
 ### Quick Start
 
-[![Quick Start](https://asciinema.org/a/182762.png)](https://asciinema.org/a/182762)
+<a href="https://asciinema.org/a/182762" target="_blank">
+  <img src="https://asciinema.org/a/182762.png" alt="Quick Start" width="240" height="180" border="10"/>
+</a>
 
 ### usage
 
