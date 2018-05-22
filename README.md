@@ -89,3 +89,12 @@ ok
 ### Document:
 
 [Here](docs/README.md)
+
+### [CHANGELOG](./CHANGELOG.md):
+
+#### v:0.1.0 : 2018.05.23 (May 23, 2018)
+
+  - control structure and built-in process
+  - primitive procedures
+  - basic type
+
