@@ -108,3 +108,4 @@ cmake version >= 3.10
   - primitive procedures
   - basic type
 
+### 不支持浮点数运算,难度不小(其实是懒).
