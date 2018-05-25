@@ -224,6 +224,8 @@ SchemeObject* Read(FILE* in)
         return ReadPair(in);
     } else if (c == '\'') { /* read quoted expression */
         return Cons(QuoteSymbol, Cons(Read(in), TheEmptyList));
+    } else if (c == EOF) {
+        return NULL;
     } else {
         fprintf(stderr, "bad input. Unexpected '%c'\n", c);
         exit(1);
