@@ -2,6 +2,7 @@
 #define SCHEME_C_OBJECT_H
 
 #include <stddef.h>
+#include <bits/types/FILE.h>
 #include "type.h"
 
 typedef struct SchemeObject {
@@ -30,11 +31,19 @@ typedef struct SchemeObject {
         struct {
             struct SchemeObject* (* fn)(struct SchemeObject* arguments);
         } primitive_proc;
+
         struct {
             struct SchemeObject* parameters;
             struct SchemeObject* body;
             struct SchemeObject* env;
         } compound_proc;
+
+        struct {
+            FILE* stream;
+        } output_port;
+        struct {
+            FILE* stream;
+        } input_port;
     } data;
 } SchemeObject;
 
