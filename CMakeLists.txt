@@ -25,4 +25,5 @@ add_executable(
         scheme/cond.c        scheme/cond.h
         scheme/let.c         scheme/let.h
         scheme/apply.c       scheme/apply.h
+        scheme/io.c          scheme/io.h
 )
