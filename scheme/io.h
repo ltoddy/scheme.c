@@ -18,4 +18,18 @@ extern SchemeObject* ReadProcedure(SchemeObject* arguments);
 
 extern SchemeObject* ReadCharProcedure(SchemeObject* arguments);
 
+extern SchemeObject* IsEOFObjectProcedure(SchemeObject* arguments);
+
+extern SchemeObject* OpenOutputPortProcedure(SchemeObject* arguments);
+
+extern SchemeObject* CloseOutputPortProcedure(SchemeObject* arguments);
+
+extern SchemeObject* IsOutputPortProcedure(SchemeObject* arguments);
+
+extern SchemeObject* WriteCharProcedure(SchemeObject* arguments);
+
+extern SchemeObject* WriteProcedure(SchemeObject* arguments);
+
+extern SchemeObject* ErrorProcedure(SchemeObject* arguments);
+
 #endif //SCHEME_C_IO_H
