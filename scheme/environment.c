@@ -54,7 +54,7 @@ SchemeObject* LookupVariableValue(SchemeObject* var, SchemeObject* environ)
         }
         environ = EnclosingEnvironment(environ);
     }
-    fprintf(stderr, "unbound variable.\n");
+    fprintf(stderr, "unbound variable, %s\n", var->data.symbol.value);
     exit(1);
 }
 
@@ -74,7 +74,7 @@ void SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject* enviro
         }
         environ = EnclosingEnvironment(environ);
     }
-    fprintf(stderr, "unbound variable.\n");
+    fprintf(stderr, "unbound variable, %s\n", var->data.symbol.value);
     exit(1);
 }
 
