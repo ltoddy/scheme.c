@@ -11,6 +11,7 @@
 #include "let.h"
 #include "predicate.h"
 #include "apply.h"
+#include "io.h"
 
 SchemeObject* True = NULL;
 SchemeObject* False = NULL;
@@ -30,6 +31,7 @@ SchemeObject* ElseSymbol = NULL;
 SchemeObject* LetSymbol = NULL;
 SchemeObject* AndSymbol = NULL;
 SchemeObject* OrSymbol = NULL;
+SchemeObject* EOF_OBJ = NULL;
 
 void PopulateEnvironment(SchemeObject* env)
 {
@@ -72,6 +74,24 @@ void PopulateEnvironment(SchemeObject* env)
     ADD_PRIMITIVE("null-environment", NullEnvironmentProc);
     ADD_PRIMITIVE("environment", EnvironemntProc);
     ADD_PRIMITIVE("eval", EvalProc)
+
+    /* I/O procedure */
+    ADD_PRIMITIVE("load", LoadProcedure);
+
+    ADD_PRIMITIVE("open-input-port", OpenInputPortProcedure);
+    ADD_PRIMITIVE("close-input-port", CloseInputPortProcedure);
+    ADD_PRIMITIVE("input-port?", IsInputPortProcedure);
+    ADD_PRIMITIVE("read", ReadProcedure);
+    ADD_PRIMITIVE("read-char", ReadCharProcedure);
+    ADD_PRIMITIVE("eof-object?", IsEOFObjectProcedure);
+
+    ADD_PRIMITIVE("open-output-port", OpenOutputPortProcedure);
+    ADD_PRIMITIVE("close-output-port", CloseOutputPortProcedure);
+    ADD_PRIMITIVE("output-port?", IsOutputPortProcedure);
+    ADD_PRIMITIVE("write-char", WriteCharProcedure);
+    ADD_PRIMITIVE("write", WriteProcedure);
+
+    ADD_PRIMITIVE("error", ErrorProcedure);
 }
 
 void InitScheme()
@@ -87,6 +107,9 @@ void InitScheme()
     TheEmptyList = AllocObject();
     TheEmptyList->type = THE_EMPTY_LIST;
     SymbolTable = TheEmptyList;
+
+    EOF_OBJ = AllocObject();
+    EOF_OBJ->type = EOF_OBJECT;
 
     QuoteSymbol = MakeSymbol("quote");
     DefineSymbol = MakeSymbol("define");

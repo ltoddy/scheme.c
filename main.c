@@ -7,13 +7,18 @@
 
 int main()
 {
+    SchemeObject* exp;
     InitScheme();
 
-    printf("Welcome to Scheme. Use ctrl-c to exit.\n");
+    printf("Welcome to Scheme. Use ctrl-c or ctrl-d (this is the eof shortcut) to exit.\n");
 
     for (;;) {
         printf("> ");
-        Write(Eval(Read(stdin), TheGlobalEnvironment));
+        exp = Read(stdin);
+        if (exp == NULL) {
+            break;
+        }
+        Write(stdout, Eval(exp, TheGlobalEnvironment));
         printf("\n");
     }
 
