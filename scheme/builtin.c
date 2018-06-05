@@ -129,7 +129,7 @@ void InitScheme()
 }
 
 /* ---------------- end primitive procedure ---------------- */
-SchemeObject* AddProcedure(SchemeObject* arguments) /* + */
+SchemeObject* AddProcedure(SchemeObject* arguments) /* (+ ...) */
 {
     long result = 0;
 
@@ -140,7 +140,7 @@ SchemeObject* AddProcedure(SchemeObject* arguments) /* + */
     return MakeFixnum(result);
 }
 
-SchemeObject* SubProcedure(SchemeObject* arguments) /* - */
+SchemeObject* SubProcedure(SchemeObject* arguments) /* (- ...) */
 {
     long result = (Car(arguments))->data.fixnum.value;
 
@@ -150,7 +150,7 @@ SchemeObject* SubProcedure(SchemeObject* arguments) /* - */
     return MakeFixnum(result);
 }
 
-SchemeObject* MulProcedure(SchemeObject* arguments) /* * */
+SchemeObject* MulProcedure(SchemeObject* arguments) /* (* ...) */
 {
     long result = 1;
 
@@ -161,19 +161,19 @@ SchemeObject* MulProcedure(SchemeObject* arguments) /* * */
     return MakeFixnum(result);
 }
 
-SchemeObject* QuotientProcedure(SchemeObject* arguments) /* quotient */
+SchemeObject* QuotientProcedure(SchemeObject* arguments) /* (quotient ...) */
 {
     return MakeFixnum((Car(arguments))->data.fixnum.value /
                       (CADR(arguments))->data.fixnum.value);
 }
 
-SchemeObject* RemainderProcedure(SchemeObject* arguments) /* remainder */
+SchemeObject* RemainderProcedure(SchemeObject* arguments) /* (remainder ...) */
 {
     return MakeFixnum((Car(arguments))->data.fixnum.value %
                       (CADR(arguments))->data.fixnum.value);
 }
 
-SchemeObject* IsNumberEqualProcedure(SchemeObject* arguments) /* = */
+SchemeObject* IsNumberEqualProcedure(SchemeObject* arguments) /* (= ...) */
 {
     long value = (Car(arguments))->data.fixnum.value;
 
@@ -185,7 +185,7 @@ SchemeObject* IsNumberEqualProcedure(SchemeObject* arguments) /* = */
     return True;
 }
 
-SchemeObject* IsLessThanProcedure(SchemeObject* arguments) /* < */
+SchemeObject* IsLessThanProcedure(SchemeObject* arguments) /* (< ...) */
 {
     long previous = (Car(arguments))->data.fixnum.value;
     long next;
@@ -200,7 +200,7 @@ SchemeObject* IsLessThanProcedure(SchemeObject* arguments) /* < */
     return True;
 }
 
-SchemeObject* IsGreaterThanProcedure(SchemeObject* arguments) /* > */
+SchemeObject* IsGreaterThanProcedure(SchemeObject* arguments) /* (> ...) */
 {
     long previout = (Car(arguments))->data.fixnum.value;
     long next;
