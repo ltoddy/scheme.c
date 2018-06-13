@@ -9,7 +9,7 @@ add_executable(
         scheme
         main.c
         scheme/object.c      scheme/object.h
-        scheme/type.c        scheme/type.h
+                             scheme/type.h
         scheme/read.c        scheme/read.h
         scheme/write.c       scheme/write.h
         scheme/eval.c        scheme/eval.h
