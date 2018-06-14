@@ -5,7 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static char IsDelimiter(int c)
+static char
+IsDelimiter(int c)
 {
     return isspace(c) ||
            c == EOF ||
@@ -15,7 +16,8 @@ static char IsDelimiter(int c)
            c == ';';
 }
 
-static char IsInitial(int c)
+static char
+IsInitial(int c)
 {
     return isalpha(c) ||
            c == '*' ||
@@ -27,14 +29,16 @@ static char IsInitial(int c)
            c == '!';
 }
 
-static int Peek(FILE* in)
+static int
+Peek(FILE* in)
 {
     int c = getc(in);
     ungetc(c, in);
     return c;
 }
 
-static void SkipWhitespace(FILE* in)
+static void
+SkipWhitespace(FILE* in)
 {
     int c;
     while ((c = getc(in)) != EOF) {
@@ -49,7 +53,8 @@ static void SkipWhitespace(FILE* in)
     }
 }
 
-static void SkipExpectedString(FILE* in, char* str)
+static void
+SkipExpectedString(FILE* in, char* str)
 {
     int c;
     while (*str != '\0') {
@@ -62,7 +67,8 @@ static void SkipExpectedString(FILE* in, char* str)
     }
 }
 
-static void PeekExpectedDelimiter(FILE* in)
+static void
+PeekExpectedDelimiter(FILE* in)
 {
     if (!IsDelimiter(Peek(in))) {
         fprintf(stderr, "character not followed by delimiter.");
@@ -70,7 +76,8 @@ static void PeekExpectedDelimiter(FILE* in)
     }
 }
 
-static SchemeObject* ReadCharacter(FILE* in)
+static SchemeObject*
+ReadCharacter(FILE* in)
 {
     int c = getc(in);
     switch (c) {
@@ -98,7 +105,8 @@ static SchemeObject* ReadCharacter(FILE* in)
     return MakeCharacter((char) c);
 }
 
-static SchemeObject* ReadPair(FILE* in)
+static SchemeObject*
+ReadPair(FILE* in)
 {
     int c;
     SchemeObject* car;
@@ -137,7 +145,8 @@ static SchemeObject* ReadPair(FILE* in)
     }
 }
 
-SchemeObject* Read(FILE* in)
+extern SchemeObject*
+Read(FILE* in)
 {
     int c = 0;
     short sign = 1;

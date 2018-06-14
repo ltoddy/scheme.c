@@ -1,17 +1,20 @@
 #include "begin.h"
 #include "predicate.h"
 
-SchemeObject* MakeBegin(SchemeObject* seq)
+extern SchemeObject*
+MakeBegin(SchemeObject* seq)
 {
     return Cons(BeginSymbol, seq);
 }
 
-char IsBegin(SchemeObject* exp)
+extern char
+IsBegin(SchemeObject* exp)
 {
     return IsTaggedList(exp, BeginSymbol);
 }
 
-SchemeObject* BeginAction(SchemeObject* exp)
+extern SchemeObject*
+BeginAction(SchemeObject* exp)
 {
     return Cdr(exp);
 }

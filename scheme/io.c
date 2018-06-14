@@ -8,7 +8,8 @@
 #include "builtin.h"
 #include "write.h"
 
-SchemeObject* LoadProcedure(SchemeObject* arguments)
+extern SchemeObject*
+LoadProcedure(SchemeObject* arguments)
 {
     SchemeObject* exp;
     SchemeObject* result = NULL;
@@ -26,7 +27,8 @@ SchemeObject* LoadProcedure(SchemeObject* arguments)
     return result;
 }
 
-static SchemeObject* MakeInputPort(FILE* stream)
+static SchemeObject*
+MakeInputPort(FILE* stream)
 {
     SchemeObject* obj = AllocObject();
     obj->type = INPUT_PORT;
@@ -34,7 +36,8 @@ static SchemeObject* MakeInputPort(FILE* stream)
     return obj;
 }
 
-SchemeObject* OpenInputPortProcedure(SchemeObject* arguments)
+extern SchemeObject*
+OpenInputPortProcedure(SchemeObject* arguments)
 {
     char* filename = Car(arguments)->data.string.value;
     FILE* in = fopen(filename, "r");
@@ -45,7 +48,8 @@ SchemeObject* OpenInputPortProcedure(SchemeObject* arguments)
     return MakeInputPort(in);
 }
 
-SchemeObject* CloseInputPortProcedure(SchemeObject* arguments)
+extern SchemeObject*
+CloseInputPortProcedure(SchemeObject* arguments)
 {
     int result = fclose(Car(arguments)->data.input_port.stream);
     if (result == EOF) {
@@ -55,17 +59,20 @@ SchemeObject* CloseInputPortProcedure(SchemeObject* arguments)
     return OkSymbol;
 }
 
-static char IsInputPort(SchemeObject* obj)
+static char
+IsInputPort(SchemeObject* obj)
 {
     return obj->type == INPUT_PORT;
 }
 
-SchemeObject* IsInputPortProcedure(SchemeObject* arguments)
+extern SchemeObject*
+IsInputPortProcedure(SchemeObject* arguments)
 {
     return IsInputPort(Car(arguments)) ? True : False;
 }
 
-SchemeObject* ReadProcedure(SchemeObject* arguments)
+extern SchemeObject*
+ReadProcedure(SchemeObject* arguments)
 {
     FILE* in = IsTheEmptyList(arguments) ?
                stdin :
@@ -74,7 +81,8 @@ SchemeObject* ReadProcedure(SchemeObject* arguments)
     return (result == NULL) ? EOF_OBJ : result;
 }
 
-SchemeObject* ReadCharProcedure(SchemeObject* arguments)
+extern SchemeObject*
+ReadCharProcedure(SchemeObject* arguments)
 {
     FILE* in = IsTheEmptyList(arguments) ?
                stdin :
@@ -83,17 +91,20 @@ SchemeObject* ReadCharProcedure(SchemeObject* arguments)
     return (result == EOF) ? EOF_OBJ : MakeCharacter((char) result);
 }
 
-static char IsEOFObj(SchemeObject* obj)
+static char
+IsEOFObj(SchemeObject* obj)
 {
     return obj == EOF_OBJ;
 }
 
-SchemeObject* IsEOFObjectProcedure(SchemeObject* arguments)
+extern SchemeObject*
+IsEOFObjectProcedure(SchemeObject* arguments)
 {
     return IsEOFObj(Car(arguments)) ? True : False;
 }
 
-static SchemeObject* MakeOutputPort(FILE* stream)
+static SchemeObject*
+MakeOutputPort(FILE* stream)
 {
     SchemeObject* obj = AllocObject();
     obj->type = OUT_PORT;
@@ -101,7 +112,8 @@ static SchemeObject* MakeOutputPort(FILE* stream)
     return obj;
 }
 
-SchemeObject* OpenOutputPortProcedure(SchemeObject* arguments)
+extern SchemeObject*
+OpenOutputPortProcedure(SchemeObject* arguments)
 {
     char* filename = Car(arguments)->data.string.value;
     FILE* out = fopen(filename, "w");
@@ -113,7 +125,8 @@ SchemeObject* OpenOutputPortProcedure(SchemeObject* arguments)
     return MakeOutputPort(out);
 }
 
-SchemeObject* CloseOutputPortProcedure(SchemeObject* arguments)
+extern SchemeObject*
+CloseOutputPortProcedure(SchemeObject* arguments)
 {
     int result = fclose(Car(arguments)->data.output_port.stream);
     if (result == EOF) {
@@ -123,17 +136,20 @@ SchemeObject* CloseOutputPortProcedure(SchemeObject* arguments)
     return OkSymbol;
 }
 
-static char IsOutputPort(SchemeObject* obj)
+static char
+IsOutputPort(SchemeObject* obj)
 {
     return obj->type == OUT_PORT;
 }
 
-SchemeObject* IsOutputPortProcedure(SchemeObject* arguments)
+extern SchemeObject*
+IsOutputPortProcedure(SchemeObject* arguments)
 {
     return IsOutputPort(Car(arguments)) ? True : False;
 }
 
-SchemeObject* WriteCharProcedure(SchemeObject* arguments)
+extern SchemeObject*
+WriteCharProcedure(SchemeObject* arguments)
 {
     SchemeObject* character = Car(arguments);
     arguments = Cdr(arguments);
@@ -146,7 +162,8 @@ SchemeObject* WriteCharProcedure(SchemeObject* arguments)
     return OkSymbol;
 }
 
-SchemeObject* WriteProcedure(SchemeObject* arguments)
+extern SchemeObject*
+WriteProcedure(SchemeObject* arguments)
 {
     SchemeObject* exp = Car(arguments);
     arguments = Cdr(arguments);
@@ -159,7 +176,8 @@ SchemeObject* WriteProcedure(SchemeObject* arguments)
     return OkSymbol;
 }
 
-SchemeObject* ErrorProcedure(SchemeObject* arguments)
+extern SchemeObject*
+ErrorProcedure(SchemeObject* arguments)
 {
     while (!IsTheEmptyList(arguments)) {
         Write(stderr, Car(arguments));

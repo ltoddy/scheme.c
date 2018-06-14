@@ -7,12 +7,14 @@
 (if (predicate) (consequent) (alternative))
 */
 
-char IsIf(SchemeObject* exp)
+extern char
+IsIf(SchemeObject* exp)
 {
     return IsTaggedList(exp, IfSymbol);
 }
 
-SchemeObject* MakeIf(SchemeObject* predicate, SchemeObject* consequent, SchemeObject* alternative)
+extern SchemeObject*
+MakeIf(SchemeObject* predicate, SchemeObject* consequent, SchemeObject* alternative)
 {
     return Cons(IfSymbol,
                 Cons(predicate,
@@ -20,17 +22,20 @@ SchemeObject* MakeIf(SchemeObject* predicate, SchemeObject* consequent, SchemeOb
                           Cons(alternative, TheEmptyList))));
 }
 
-SchemeObject* IfPredicate(SchemeObject* exp)
+extern SchemeObject*
+IfPredicate(SchemeObject* exp)
 {
     return CADR(exp);
 }
 
-SchemeObject* IfConsequent(SchemeObject* exp)
+extern SchemeObject*
+IfConsequent(SchemeObject* exp)
 {
     return CADDR(exp);
 }
 
-SchemeObject* IfAlternative(SchemeObject* exp)
+extern SchemeObject*
+IfAlternative(SchemeObject* exp)
 {
     if (IsTheEmptyList(CDDDR(exp))) {
         return False;

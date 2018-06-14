@@ -33,6 +33,252 @@ SchemeObject* AndSymbol = NULL;
 SchemeObject* OrSymbol = NULL;
 SchemeObject* EOF_OBJ = NULL;
 
+/* ---------------- end primitive procedure ---------------- */
+static SchemeObject*
+AddProcedure(SchemeObject* arguments) /* (+ ...) */
+{
+    long result = 0;
+
+    while (!IsTheEmptyList(arguments)) {
+        result += (Car(arguments))->data.fixnum.value;
+        arguments = Cdr(arguments);
+    }
+    return MakeFixnum(result);
+}
+
+static SchemeObject*
+SubProcedure(SchemeObject* arguments) /* (- ...) */
+{
+    long result = (Car(arguments))->data.fixnum.value;
+
+    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
+        result -= (Car(arguments))->data.fixnum.value;
+    }
+    return MakeFixnum(result);
+}
+
+static SchemeObject*
+MulProcedure(SchemeObject* arguments) /* (* ...) */
+{
+    long result = 1;
+
+    while (!IsTheEmptyList(arguments)) {
+        result *= (Car(arguments))->data.fixnum.value;
+        arguments = Cdr(arguments);
+    }
+    return MakeFixnum(result);
+}
+
+static SchemeObject*
+QuotientProcedure(SchemeObject* arguments) /* (quotient ...) */
+{
+    return MakeFixnum((Car(arguments))->data.fixnum.value /
+                      (CADR(arguments))->data.fixnum.value);
+}
+
+static SchemeObject*
+RemainderProcedure(SchemeObject* arguments) /* (remainder ...) */
+{
+    return MakeFixnum((Car(arguments))->data.fixnum.value %
+                      (CADR(arguments))->data.fixnum.value);
+}
+
+static SchemeObject*
+IsNumberEqualProcedure(SchemeObject* arguments) /* (= ...) */
+{
+    long value = (Car(arguments))->data.fixnum.value;
+
+    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
+        if (value != (Car(arguments))->data.fixnum.value) {
+            return False;
+        }
+    }
+    return True;
+}
+
+static SchemeObject*
+IsLessThanProcedure(SchemeObject* arguments) /* (< ...) */
+{
+    long previous = (Car(arguments))->data.fixnum.value;
+    long next;
+    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
+        next = (Car(arguments))->data.fixnum.value;
+        if (previous < next) {
+            return True;
+        } else {
+            return False;
+        }
+    }
+    return True;
+}
+
+static SchemeObject*
+IsGreaterThanProcedure(SchemeObject* arguments) /* (> ...) */
+{
+    long previout = (Car(arguments))->data.fixnum.value;
+    long next;
+    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
+        next = (Car(arguments))->data.fixnum.value;
+        if (previout < next) {
+            return False;
+        } else {
+            return True;
+        }
+    }
+    return True;
+}
+
+static SchemeObject*
+ConsProcedure(SchemeObject* arguments) /* (cons ...) */
+{
+    return Cons(Car(arguments), CADR(arguments));
+}
+
+static SchemeObject*
+CarProcedure(SchemeObject* arguments) /* (car ...) */
+{
+    return CAAR(arguments);
+}
+
+static SchemeObject*
+CdrProcedure(SchemeObject* arguments) /* (cdr ...) */
+{
+    return CDAR(arguments);
+}
+
+static SchemeObject*
+SetCarProcedure(SchemeObject* arguments) /* (set-car! ...) */
+{
+    SetCar(Car(arguments), CADR(arguments));
+    return OkSymbol;
+}
+
+static SchemeObject*
+SetCdrProcedure(SchemeObject* arguments) /* (set-cdr! ...) */
+{
+    SetCdr(Car(arguments), CADR(arguments));
+    return OkSymbol;
+}
+
+static SchemeObject*
+ListProcedure(SchemeObject* arguments) /* (list ...) */
+{
+    return arguments;
+}
+
+static SchemeObject*
+IsEqProcedure(SchemeObject* arguments) /* (eq? ...) */
+{
+    SchemeObject* obj1 = Car(arguments);
+    SchemeObject* obj2 = CADR(arguments);
+
+    if (obj1->type != obj2->type) {
+        return False;
+    }
+
+    switch (obj1->type) {
+        case FIXNUM:
+            return (obj1->data.fixnum.value == obj2->data.fixnum.value) ? True : False;
+        case CHARACTER:
+            return (obj1->data.character.value == obj2->data.character.value) ? True : False;
+        case STRING:
+            return (obj1->data.string.value == obj2->data.string.value) ? True : False;
+        default:
+            return obj1 == obj2 ? True : False;
+    }
+}
+
+static SchemeObject*
+IsNullProcedure(SchemeObject* arguments) /* (null? ...) */
+{
+    return IsTheEmptyList(Car(arguments)) ? True : False;
+}
+
+static SchemeObject*
+IsBooleanProcedure(SchemeObject* arguments) /* (boolean? ...) */
+{
+    return IsBoolean(Car(arguments)) ? True : False;
+}
+
+static SchemeObject*
+IsSymbolProcedure(SchemeObject* arguments) /* (symbol? ...) */
+{
+    return IsSymbol(Car(arguments)) ? True : False;
+}
+
+static SchemeObject*
+IsIntegerProcedure(SchemeObject* arguments) /* (integer? ...) */
+{
+    return IsFixnum(Car(arguments)) ? True : False;
+}
+
+static SchemeObject*
+IsCharProcedure(SchemeObject* arguments) /* (char? ...) */
+{
+    return IsCharacter(Car(arguments)) ? True : False;
+}
+
+static SchemeObject*
+IsStringProcedure(SchemeObject* arguments) /* (string? ...) */
+{
+    return IsString(Car(arguments)) ? True : False;
+}
+
+static SchemeObject*
+IsPairProcedure(SchemeObject* arguments) /* (pair? ...) */
+{
+    return IsPair(Car(arguments)) ? True : False;
+}
+
+static SchemeObject*
+IsProcedureProcedure(SchemeObject* arguments) /* (procedure? ...) */
+{
+    SchemeObject* obj = Car(arguments);
+
+    return (IsPrimitiveProc(obj)) || (IsCompoundProc(obj)) ? True : False;
+}
+
+static SchemeObject*
+NumberToStringProcedure(SchemeObject* arguments) /* (number->string ...) */
+{
+    char buffer[100];
+
+    sprintf(buffer, "%ld", Car(arguments)->data.fixnum.value);
+    return MakeString(buffer);
+}
+
+static SchemeObject*
+StringToNumberProcedure(SchemeObject* arguments) /* (string->number ...) */
+{
+    return MakeFixnum(atoi(Car(arguments)->data.string.value));
+}
+
+static SchemeObject*
+SymbolToStringProcedure(SchemeObject* arguments) /* (symbol->string ...) */
+{
+    return MakeString(Car(arguments)->data.symbol.value);
+}
+
+static SchemeObject*
+StringToSymbolProcedure(SchemeObject* arguments) /* (string->symbol ...) */
+{
+    return MakeSymbol(Car(arguments)->data.string.value);
+}
+
+static SchemeObject*
+CharToIntegerProcedure(SchemeObject* arguments) /* (char->integer ...) */
+{
+    return MakeFixnum(Car(arguments)->data.character.value);
+}
+
+static SchemeObject*
+IntegerToCharProcedure(SchemeObject* arguments) /* (integer->char ...) */
+{
+    return MakeCharacter((char) Car(arguments)->data.fixnum.value);
+}
+
+/* ---------------- end primitive procedure ---------------- */
+
 void PopulateEnvironment(SchemeObject* env)
 {
 #define ADD_PRIMITIVE(scheme_name, c_name) \
@@ -127,223 +373,6 @@ void InitScheme()
     TheEmptyEnvironment = TheEmptyList;
     TheGlobalEnvironment = MakeEnvironment();
 }
-
-/* ---------------- end primitive procedure ---------------- */
-SchemeObject* AddProcedure(SchemeObject* arguments) /* (+ ...) */
-{
-    long result = 0;
-
-    while (!IsTheEmptyList(arguments)) {
-        result += (Car(arguments))->data.fixnum.value;
-        arguments = Cdr(arguments);
-    }
-    return MakeFixnum(result);
-}
-
-SchemeObject* SubProcedure(SchemeObject* arguments) /* (- ...) */
-{
-    long result = (Car(arguments))->data.fixnum.value;
-
-    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
-        result -= (Car(arguments))->data.fixnum.value;
-    }
-    return MakeFixnum(result);
-}
-
-SchemeObject* MulProcedure(SchemeObject* arguments) /* (* ...) */
-{
-    long result = 1;
-
-    while (!IsTheEmptyList(arguments)) {
-        result *= (Car(arguments))->data.fixnum.value;
-        arguments = Cdr(arguments);
-    }
-    return MakeFixnum(result);
-}
-
-SchemeObject* QuotientProcedure(SchemeObject* arguments) /* (quotient ...) */
-{
-    return MakeFixnum((Car(arguments))->data.fixnum.value /
-                      (CADR(arguments))->data.fixnum.value);
-}
-
-SchemeObject* RemainderProcedure(SchemeObject* arguments) /* (remainder ...) */
-{
-    return MakeFixnum((Car(arguments))->data.fixnum.value %
-                      (CADR(arguments))->data.fixnum.value);
-}
-
-SchemeObject* IsNumberEqualProcedure(SchemeObject* arguments) /* (= ...) */
-{
-    long value = (Car(arguments))->data.fixnum.value;
-
-    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
-        if (value != (Car(arguments))->data.fixnum.value) {
-            return False;
-        }
-    }
-    return True;
-}
-
-SchemeObject* IsLessThanProcedure(SchemeObject* arguments) /* (< ...) */
-{
-    long previous = (Car(arguments))->data.fixnum.value;
-    long next;
-    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
-        next = (Car(arguments))->data.fixnum.value;
-        if (previous < next) {
-            return True;
-        } else {
-            return False;
-        }
-    }
-    return True;
-}
-
-SchemeObject* IsGreaterThanProcedure(SchemeObject* arguments) /* (> ...) */
-{
-    long previout = (Car(arguments))->data.fixnum.value;
-    long next;
-    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
-        next = (Car(arguments))->data.fixnum.value;
-        if (previout < next) {
-            return False;
-        } else {
-            return True;
-        }
-    }
-    return True;
-}
-
-SchemeObject* ConsProcedure(SchemeObject* arguments) /* (cons ...) */
-{
-    return Cons(Car(arguments), CADR(arguments));
-}
-
-SchemeObject* CarProcedure(SchemeObject* arguments) /* (car ...) */
-{
-    return CAAR(arguments);
-}
-
-SchemeObject* CdrProcedure(SchemeObject* arguments) /* (cdr ...) */
-{
-    return CDAR(arguments);
-}
-
-SchemeObject* SetCarProcedure(SchemeObject* arguments) /* (set-car! ...) */
-{
-    SetCar(Car(arguments), CADR(arguments));
-    return OkSymbol;
-}
-
-SchemeObject* SetCdrProcedure(SchemeObject* arguments) /* (set-cdr! ...) */
-{
-    SetCdr(Car(arguments), CADR(arguments));
-    return OkSymbol;
-}
-
-SchemeObject* ListProcedure(SchemeObject* arguments) /* (list ...) */
-{
-    return arguments;
-}
-
-SchemeObject* IsEqProcedure(SchemeObject* arguments) /* (eq? ...) */
-{
-    SchemeObject* obj1 = Car(arguments);
-    SchemeObject* obj2 = CADR(arguments);
-
-    if (obj1->type != obj2->type) {
-        return False;
-    }
-
-    switch (obj1->type) {
-        case FIXNUM:
-            return (obj1->data.fixnum.value == obj2->data.fixnum.value) ? True : False;
-        case CHARACTER:
-            return (obj1->data.character.value == obj2->data.character.value) ? True : False;
-        case STRING:
-            return (obj1->data.string.value == obj2->data.string.value) ? True : False;
-        default:
-            return obj1 == obj2 ? True : False;
-    }
-}
-
-SchemeObject* IsNullProcedure(SchemeObject* arguments) /* (null? ...) */
-{
-    return IsTheEmptyList(Car(arguments)) ? True : False;
-}
-
-SchemeObject* IsBooleanProcedure(SchemeObject* arguments) /* (boolean? ...) */
-{
-    return IsBoolean(Car(arguments)) ? True : False;
-}
-
-SchemeObject* IsSymbolProcedure(SchemeObject* arguments) /* (symbol? ...) */
-{
-    return IsSymbol(Car(arguments)) ? True : False;
-}
-
-SchemeObject* IsIntegerProcedure(SchemeObject* arguments) /* (integer? ...) */
-{
-    return IsFixnum(Car(arguments)) ? True : False;
-}
-
-SchemeObject* IsCharProcedure(SchemeObject* arguments) /* (char? ...) */
-{
-    return IsCharacter(Car(arguments)) ? True : False;
-}
-
-SchemeObject* IsStringProcedure(SchemeObject* arguments) /* (string? ...) */
-{
-    return IsString(Car(arguments)) ? True : False;
-}
-
-SchemeObject* IsPairProcedure(SchemeObject* arguments) /* (pair? ...) */
-{
-    return IsPair(Car(arguments)) ? True : False;
-}
-
-SchemeObject* IsProcedureProcedure(SchemeObject* arguments) /* (procedure? ...) */
-{
-    SchemeObject* obj = Car(arguments);
-
-    return (IsPrimitiveProc(obj)) || (IsCompoundProc(obj)) ? True : False;
-}
-
-SchemeObject* NumberToStringProcedure(SchemeObject* arguments) /* (number->string ...) */
-{
-    char buffer[100];
-
-    sprintf(buffer, "%ld", Car(arguments)->data.fixnum.value);
-    return MakeString(buffer);
-}
-
-SchemeObject* StringToNumberProcedure(SchemeObject* arguments) /* (string->number ...) */
-{
-    return MakeFixnum(atoi(Car(arguments)->data.string.value));
-}
-
-SchemeObject* SymbolToStringProcedure(SchemeObject* arguments) /* (symbol->string ...) */
-{
-    return MakeString(Car(arguments)->data.symbol.value);
-}
-
-SchemeObject* StringToSymbolProcedure(SchemeObject* arguments) /* (string->symbol ...) */
-{
-    return MakeSymbol(Car(arguments)->data.string.value);
-}
-
-SchemeObject* CharToIntegerProcedure(SchemeObject* arguments) /* (char->integer ...) */
-{
-    return MakeFixnum(Car(arguments)->data.character.value);
-}
-
-SchemeObject* IntegerToCharProcedure(SchemeObject* arguments) /* (integer->char ...) */
-{
-    return MakeCharacter((char) Car(arguments)->data.fixnum.value);
-}
-/* ---------------- end primitive procedure ---------------- */
-
 
 /* ---------------- compound procedure ---------------- */
 SchemeObject* MakeCompoundProc(SchemeObject* parameters, SchemeObject* body, SchemeObject* env)

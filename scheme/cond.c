@@ -6,32 +6,38 @@
 #include "if.h"
 #include <stdio.h>
 
-char IsCond(SchemeObject* exp)
+extern char
+IsCond(SchemeObject* exp)
 {
     return IsTaggedList(exp, CondSymbol);
 }
 
-static SchemeObject* CondClauses(SchemeObject* exp)
+static SchemeObject*
+CondClauses(SchemeObject* exp)
 {
     return Cdr(exp);
 }
 
-static SchemeObject* CondPredicate(SchemeObject* exp)
+static SchemeObject*
+CondPredicate(SchemeObject* exp)
 {
     return Car(exp);
 }
 
-static SchemeObject* CondAction(SchemeObject* exp)
+static SchemeObject*
+CondAction(SchemeObject* exp)
 {
     return Cdr(exp);
 }
 
-static char IsCondElseClause(SchemeObject* clause)
+static char
+IsCondElseClause(SchemeObject* clause)
 {
     return CondPredicate(clause) == ElseSymbol;
 }
 
-static SchemeObject* SequenceToExp(SchemeObject* seq)
+static SchemeObject*
+SequenceToExp(SchemeObject* seq)
 {
     if (IsTheEmptyList(seq)) {
         return seq;
@@ -42,7 +48,8 @@ static SchemeObject* SequenceToExp(SchemeObject* seq)
     }
 }
 
-static SchemeObject* ExpandClauses(SchemeObject* clauses)
+static SchemeObject*
+ExpandClauses(SchemeObject* clauses)
 {
     SchemeObject* first;
     SchemeObject* rest;
@@ -66,7 +73,8 @@ static SchemeObject* ExpandClauses(SchemeObject* clauses)
     }
 }
 
-SchemeObject* CondToIf(SchemeObject* exp)
+extern SchemeObject*
+CondToIf(SchemeObject* exp)
 {
     return ExpandClauses(CondClauses(exp));
 }

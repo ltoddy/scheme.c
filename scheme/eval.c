@@ -15,34 +15,40 @@
 #include "let.h"
 #include "apply.h"
 
-static SchemeObject* TextOfQuotation(SchemeObject* exp)
+static SchemeObject*
+TextOfQuotation(SchemeObject* exp)
 {
     return CADR(exp);
 }
 
-static SchemeObject* EvalAssignment(SchemeObject* exp, SchemeObject* environ)
+static SchemeObject*
+EvalAssignment(SchemeObject* exp, SchemeObject* environ)
 {
     SetVariableValue(AssignmentVariable(exp), Eval(AssignmentValue(exp), environ), environ);
     return OkSymbol;
 }
 
-static SchemeObject* EvalDefinition(SchemeObject* exp, SchemeObject* environ)
+static SchemeObject*
+EvalDefinition(SchemeObject* exp, SchemeObject* environ)
 {
     DefineVariable(DefinitionVariable(exp), Eval(DefinitionValue(exp), environ), environ);
     return OkSymbol;
 }
 
-static SchemeObject* EvalExpression(SchemeObject* arguments)
+static SchemeObject*
+EvalExpression(SchemeObject* arguments)
 {
     return Car(arguments);
 }
 
-static SchemeObject* EvalEnvironment(SchemeObject* arguments)
+static SchemeObject*
+EvalEnvironment(SchemeObject* arguments)
 {
     return CADR(arguments);
 }
 
-SchemeObject* ListOfValues(SchemeObject* exps, SchemeObject* environ)
+extern SchemeObject*
+ListOfValues(SchemeObject* exps, SchemeObject* environ)
 {
     if (IsNoOperands(exps)) {
         return TheEmptyList;
@@ -52,7 +58,8 @@ SchemeObject* ListOfValues(SchemeObject* exps, SchemeObject* environ)
     }
 }
 
-SchemeObject* Eval(SchemeObject* exp, SchemeObject* environ)
+extern SchemeObject*
+Eval(SchemeObject* exp, SchemeObject* environ)
 {
     SchemeObject* procedure;
     SchemeObject* arguments;

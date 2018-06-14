@@ -7,7 +7,8 @@
 #include "predicate.h"
 
 /* no GC */
-SchemeObject* AllocObject()
+extern SchemeObject*
+AllocObject()
 {
     SchemeObject* obj = malloc(sizeof(SchemeObject));
     if (obj == NULL) {
@@ -17,7 +18,8 @@ SchemeObject* AllocObject()
     return obj;
 }
 
-SchemeObject* MakeFixnum(long value)
+extern SchemeObject*
+MakeFixnum(long value)
 {
     SchemeObject* obj = AllocObject();
     obj->type = FIXNUM;
@@ -25,32 +27,38 @@ SchemeObject* MakeFixnum(long value)
     return obj;
 }
 
-char IsFixnum(SchemeObject* obj)
+extern char
+IsFixnum(SchemeObject* obj)
 {
     return obj->type == FIXNUM;
 }
 
-char IsTheEmptyList(SchemeObject* obj)
+extern char
+IsTheEmptyList(SchemeObject* obj)
 {
     return obj == TheEmptyList;
 }
 
-char IsBoolean(SchemeObject* obj)
+extern char
+IsBoolean(SchemeObject* obj)
 {
     return obj->type == BOOLEAN;
 }
 
-char IsFalse(SchemeObject* obj)
+extern char
+IsFalse(SchemeObject* obj)
 {
     return obj == False;
 }
 
-char IsTrue(SchemeObject* obj)
+extern char
+IsTrue(SchemeObject* obj)
 {
     return !IsFalse(obj);
 }
 
-SchemeObject* MakeCharacter(char value)
+extern SchemeObject*
+MakeCharacter(char value)
 {
     SchemeObject* obj = AllocObject();
     obj->type = CHARACTER;
@@ -58,12 +66,14 @@ SchemeObject* MakeCharacter(char value)
     return obj;
 }
 
-char IsCharacter(SchemeObject* obj)
+extern char
+IsCharacter(SchemeObject* obj)
 {
     return obj->type == CHARACTER;
 }
 
-SchemeObject* MakeString(char* value)
+extern SchemeObject*
+MakeString(char* value)
 {
     SchemeObject* obj = AllocObject();
     obj->type = STRING;
@@ -71,12 +81,14 @@ SchemeObject* MakeString(char* value)
     return obj;
 }
 
-char IsString(SchemeObject* obj)
+extern char
+IsString(SchemeObject* obj)
 {
     return obj->type == STRING;
 }
 
-SchemeObject* Cons(SchemeObject* car, SchemeObject* cdr)
+extern SchemeObject*
+Cons(SchemeObject* car, SchemeObject* cdr)
 {
     SchemeObject* obj = AllocObject();
     obj->type = PAIR;
@@ -85,32 +97,38 @@ SchemeObject* Cons(SchemeObject* car, SchemeObject* cdr)
     return obj;
 }
 
-char IsPair(SchemeObject* obj)
+extern char
+IsPair(SchemeObject* obj)
 {
     return obj->type == PAIR;
 }
 
-SchemeObject* Car(SchemeObject* pair)
+extern SchemeObject*
+Car(SchemeObject* pair)
 {
     return pair->data.pair.car;
 }
 
-void SetCar(SchemeObject* pair, SchemeObject* value)
+extern void
+SetCar(SchemeObject* pair, SchemeObject* value)
 {
     pair->data.pair.car = value;
 }
 
-SchemeObject* Cdr(SchemeObject* pair)
+extern SchemeObject*
+Cdr(SchemeObject* pair)
 {
     return pair->data.pair.cdr;
 }
 
-void SetCdr(SchemeObject* pair, SchemeObject* value)
+extern void
+SetCdr(SchemeObject* pair, SchemeObject* value)
 {
     pair->data.pair.cdr = value;
 }
 
-SchemeObject* MakeSymbol(char* value)
+extern SchemeObject*
+MakeSymbol(char* value)
 {
     SchemeObject* obj;
     SchemeObject* element;
@@ -137,12 +155,14 @@ SchemeObject* MakeSymbol(char* value)
     return obj;
 }
 
-char IsSymbol(SchemeObject* obj)
+extern char
+IsSymbol(SchemeObject* obj)
 {
     return obj->type == SYMBOL;
 }
 
-char IsQuote(SchemeObject* exp)
+extern char
+IsQuote(SchemeObject* exp)
 {
     return IsTaggedList(exp, QuoteSymbol);
 }

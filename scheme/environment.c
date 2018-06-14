@@ -3,43 +3,51 @@
 #include "environment.h"
 #include "builtin.h"
 
-static SchemeObject* EnclosingEnvironment(SchemeObject* environ)
+static SchemeObject*
+EnclosingEnvironment(SchemeObject* environ)
 {
     return Cdr(environ);
 }
 
-SchemeObject* FirstFrame(SchemeObject* environ)
+extern SchemeObject*
+FirstFrame(SchemeObject* environ)
 {
     return Car(environ);
 }
 
-static SchemeObject* MakeFrame(SchemeObject* variables, SchemeObject* values)
+static SchemeObject*
+MakeFrame(SchemeObject* variables, SchemeObject* values)
 {
     return Cons(variables, values);
 }
 
-SchemeObject* FrameVariables(SchemeObject* frame)
+extern SchemeObject*
+FrameVariables(SchemeObject* frame)
 {
     return Car(frame);
 }
 
-SchemeObject* FrameValues(SchemeObject* frame)
+extern SchemeObject*
+FrameValues(SchemeObject* frame)
 {
     return Cdr(frame);
 }
 
-void AddBindingToFrame(SchemeObject* var, SchemeObject* val, SchemeObject* frame)
+extern void
+AddBindingToFrame(SchemeObject* var, SchemeObject* val, SchemeObject* frame)
 {
     SetCar(frame, Cons(var, Car(frame)));
     SetCdr(frame, Cons(val, Cdr(frame)));
 }
 
-SchemeObject* ExtendEnvironment(SchemeObject* var, SchemeObject* val, SchemeObject* base_environ)
+extern SchemeObject*
+ExtendEnvironment(SchemeObject* var, SchemeObject* val, SchemeObject* base_environ)
 {
     return Cons(MakeFrame(var, val), base_environ);
 }
 
-SchemeObject* LookupVariableValue(SchemeObject* var, SchemeObject* environ)
+extern SchemeObject*
+LookupVariableValue(SchemeObject* var, SchemeObject* environ)
 {
     while (!IsTheEmptyList(environ)) {
         SchemeObject* frame = FirstFrame(environ);
@@ -58,7 +66,8 @@ SchemeObject* LookupVariableValue(SchemeObject* var, SchemeObject* environ)
     exit(1);
 }
 
-void SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
+extern void
+SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
 {
     while (!IsTheEmptyList(environ)) {
         SchemeObject* frame = FirstFrame(environ);
@@ -78,23 +87,27 @@ void SetVariableValue(SchemeObject* var, SchemeObject* val, SchemeObject* enviro
     exit(1);
 }
 
-SchemeObject* SetupEnvironment()
+extern SchemeObject*
+SetupEnvironment()
 {
     SchemeObject* initial_env = ExtendEnvironment(TheEmptyList, TheEmptyList, TheEmptyEnvironment);
     return initial_env;
 }
 
-SchemeObject* InteractionEnvironmentProc(SchemeObject* arguments)
+extern SchemeObject*
+InteractionEnvironmentProc(SchemeObject* arguments)
 {
     return TheGlobalEnvironment;
 }
 
-SchemeObject* NullEnvironmentProc(SchemeObject* arguments)
+extern SchemeObject*
+NullEnvironmentProc(SchemeObject* arguments)
 {
     return SetupEnvironment();
 }
 
-SchemeObject* MakeEnvironment()
+extern SchemeObject*
+MakeEnvironment()
 {
     SchemeObject* env;
     env = SetupEnvironment();
@@ -102,12 +115,14 @@ SchemeObject* MakeEnvironment()
     return env;
 }
 
-SchemeObject* EnvironemntProc(SchemeObject* arguments)
+extern SchemeObject*
+EnvironemntProc(SchemeObject* arguments)
 {
     return MakeEnvironment();
 }
 
-SchemeObject* EvalProc(SchemeObject* arguments)
+extern SchemeObject*
+EvalProc(SchemeObject* arguments)
 {
     fprintf(stderr, "illagel state: The body of the eval primitive should not execute.\n");
     exit(1);

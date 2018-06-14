@@ -1,27 +1,32 @@
 #include "predicate.h"
 #include "assignment.h"
 
-char IsAnd(SchemeObject* exp)
+extern char
+IsAnd(SchemeObject* exp)
 {
     return IsTaggedList(exp, AndSymbol);
 }
 
-SchemeObject* AndTests(SchemeObject* exp)
+extern SchemeObject*
+AndTests(SchemeObject* exp)
 {
     return Cdr(exp);
 }
 
-char IsOr(SchemeObject* exp)
+extern char
+IsOr(SchemeObject* exp)
 {
     return IsTaggedList(exp, OrSymbol);
 }
 
-SchemeObject* OrTests(SchemeObject* exp)
+extern SchemeObject*
+OrTests(SchemeObject* exp)
 {
     return Cdr(exp);
 }
 
-char IsTaggedList(SchemeObject* exp, SchemeObject* tag)
+extern char
+IsTaggedList(SchemeObject* exp, SchemeObject* tag)
 {
     SchemeObject* car;
     if (IsPair(exp)) {
@@ -31,7 +36,8 @@ char IsTaggedList(SchemeObject* exp, SchemeObject* tag)
     return 0;
 }
 
-char IsSelfEvaluating(SchemeObject* exp)
+extern char
+IsSelfEvaluating(SchemeObject* exp)
 {
     return IsBoolean(exp) ||
            IsFixnum(exp) ||
@@ -39,7 +45,8 @@ char IsSelfEvaluating(SchemeObject* exp)
            IsString(exp);
 }
 
-char IsVariable(SchemeObject* exp)
+extern char
+IsVariable(SchemeObject* exp)
 {
     return IsSymbol(exp);
 }

@@ -4,12 +4,14 @@
 #include "builtin.h"
 #include "lambda.h"
 
-char IsDefine(SchemeObject* exp)
+extern char
+IsDefine(SchemeObject* exp)
 {
     return IsTaggedList(exp, DefineSymbol);
 }
 
-void DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
+extern void
+DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
 {
     SchemeObject* frame = FirstFrame(environ);
     SchemeObject* vars = FrameVariables(frame);
@@ -26,7 +28,8 @@ void DefineVariable(SchemeObject* var, SchemeObject* val, SchemeObject* environ)
     AddBindingToFrame(var, val, frame);
 }
 
-SchemeObject* DefinitionVariable(SchemeObject* exp)
+extern SchemeObject*
+DefinitionVariable(SchemeObject* exp)
 {
     if (IsSymbol(CADR(exp))) {
         return CADR(exp);
@@ -35,7 +38,8 @@ SchemeObject* DefinitionVariable(SchemeObject* exp)
     }
 }
 
-SchemeObject* DefinitionValue(SchemeObject* exp)
+extern SchemeObject*
+DefinitionValue(SchemeObject* exp)
 {
     if (IsSymbol(CADR(exp))) {
         return CADDR(exp);

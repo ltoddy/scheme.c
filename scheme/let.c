@@ -4,56 +4,66 @@
 #include "procedure.h"
 #include "lambda.h"
 
-char IsLet(SchemeObject* exp)
+extern char
+IsLet(SchemeObject* exp)
 {
     return IsTaggedList(exp, LetSymbol);
 }
 
-static SchemeObject* LetBindings(SchemeObject* exp)
+static SchemeObject*
+LetBindings(SchemeObject* exp)
 {
     return CADR(exp);
 }
 
-static SchemeObject* LetBody(SchemeObject* exp)
+static SchemeObject*
+LetBody(SchemeObject* exp)
 {
     return CDDR(exp);
 }
 
-static SchemeObject* BindingParameter(SchemeObject* binding)
+static SchemeObject*
+BindingParameter(SchemeObject* binding)
 {
     return Car(binding);
 }
 
-static SchemeObject* BindingArgument(SchemeObject* binding)
+static SchemeObject*
+BindingArgument(SchemeObject* binding)
 {
     return CADR(binding);
 }
 
-static SchemeObject* BindingParameters(SchemeObject* bindings)
+static SchemeObject*
+BindingParameters(SchemeObject* bindings)
 {
     return IsTheEmptyList(bindings) ?
            TheEmptyList :
            Cons(BindingParameter(Car(bindings)), BindingParameters(Cdr(bindings)));
 }
 
-static SchemeObject* BindingArguments(SchemeObject* bindings)
+static SchemeObject*
+BindingArguments(SchemeObject* bindings)
 {
     return IsTheEmptyList(bindings) ?
            TheEmptyList :
            Cons(BindingArgument(Car(bindings)), BindingArguments(Cdr(bindings)));
 }
 
-static SchemeObject* LetParameters(SchemeObject* exp)
+static SchemeObject*
+LetParameters(SchemeObject* exp)
 {
     return BindingParameters(LetBindings(exp));
 }
 
-static SchemeObject* LetArguments(SchemeObject* exp)
+static SchemeObject*
+LetArguments(SchemeObject* exp)
 {
     return BindingArguments(LetBindings(exp));
 }
 
-SchemeObject* LetToApplication(SchemeObject* exp)
+extern SchemeObject*
+LetToApplication(SchemeObject* exp)
 {
     return MakeApplication(MakeLambda(LetParameters(exp), LetBody(exp)), LetArguments(exp));
 }

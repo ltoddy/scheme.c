@@ -3,7 +3,8 @@
 #include "write.h"
 #include "object.h"
 
-static void WritePair(FILE* out, SchemeObject* pair)
+static void
+WritePair(FILE* out, SchemeObject* pair)
 {
     SchemeObject* car = Car(pair);
     SchemeObject* cdr = Cdr(pair);
@@ -19,7 +20,8 @@ static void WritePair(FILE* out, SchemeObject* pair)
     }
 }
 
-void Write(FILE* out, SchemeObject* obj)
+extern void
+Write(FILE* out, SchemeObject* obj)
 {
     char c;
     char* str;

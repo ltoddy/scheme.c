@@ -2,18 +2,21 @@
 #include <stdlib.h>
 #include "apply.h"
 
-SchemeObject* ApplyProc(SchemeObject* arguments)
+extern SchemeObject*
+ApplyProc(SchemeObject* arguments)
 {
     fprintf(stderr, "illegal state: The body of the apply primitive procedure should not execute.\n");
     exit(1);
 }
 
-SchemeObject* ApplyOperator(SchemeObject* arguments)
+extern SchemeObject*
+ApplyOperator(SchemeObject* arguments)
 {
     return Car(arguments);
 }
 
-static SchemeObject* PrepareApplyOperands(SchemeObject* arguments)
+static SchemeObject*
+PrepareApplyOperands(SchemeObject* arguments)
 {
     if (IsTheEmptyList(Cdr(arguments))) {
         return Car(arguments);
@@ -22,7 +25,8 @@ static SchemeObject* PrepareApplyOperands(SchemeObject* arguments)
     }
 }
 
-SchemeObject* ApplyOperands(SchemeObject* arguments)
+extern SchemeObject*
+ApplyOperands(SchemeObject* arguments)
 {
     return PrepareApplyOperands(Cdr(arguments));
 }
