@@ -63,5 +63,3 @@
 
 (define (not x)
   (if x #f #t))
-
-'stdlib-loaded

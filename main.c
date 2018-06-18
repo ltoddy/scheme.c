@@ -4,6 +4,7 @@
 #include "scheme/read.h"
 #include "scheme/builtin.h"
 #include "scheme/environment.h"
+#include "scheme/io.h"
 
 int main()
 {
@@ -11,6 +12,16 @@ int main()
     InitScheme();
 
     printf("Welcome to Scheme. Use ctrl-c or ctrl-d (this is the eof shortcut) to exit.\n");
+
+    SchemeObject* stdlib = AllocObject();
+    stdlib->type = PAIR;
+    stdlib->data.pair.car = AllocObject();
+    stdlib->data.pair.car->type = STRING;
+    stdlib->data.pair.car->data.string.value = "lib/builtin.scm";
+
+    stdlib->data.pair.cdr = TheEmptyList;
+
+    LoadProcedure(stdlib);
 
     for (;;) {
         printf("> ");
