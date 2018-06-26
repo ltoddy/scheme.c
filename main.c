@@ -6,12 +6,15 @@
 #include "scheme/environment.h"
 #include "scheme/io.h"
 
+void prompt()
+{
+    printf("Welcome to Scheme. Use ctrl-c or ctrl-d (this is the eof shortcut) to exit.\n");
+}
+
 int main()
 {
     SchemeObject* exp;
     InitScheme();
-
-    printf("Welcome to Scheme. Use ctrl-c or ctrl-d (this is the eof shortcut) to exit.\n");
 
     SchemeObject* stdlib = AllocObject();
     stdlib->type = PAIR;
@@ -22,6 +25,8 @@ int main()
     stdlib->data.pair.cdr = TheEmptyList;
 
     LoadProcedure(stdlib);
+
+    prompt();
 
     for (;;) {
         printf("> ");
