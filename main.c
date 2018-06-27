@@ -8,7 +8,8 @@
 
 void prompt()
 {
-    printf("Welcome to Scheme. Use ctrl-c or ctrl-d (this is the eof shortcut) to exit.\n");
+    printf("Scheme 0.1.0.\n");
+    printf("Use ctrl-d or ctrl-c to exit.\n");
 }
 
 int main()
