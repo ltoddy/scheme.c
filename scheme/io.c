@@ -20,7 +20,7 @@ LoadProcedure(SchemeObject* arguments)
         fprintf(stderr, "cloud not load file: %s.\n", filename);
         exit(1);
     }
-    while ((exp = Read(in)) != NULL) {
+    while ((exp = Reader(in)) != NULL) {
         result = Eval(exp, TheGlobalEnvironment);
     }
     fclose(in);
@@ -77,7 +77,7 @@ ReadProcedure(SchemeObject* arguments)
     FILE* in = IsTheEmptyList(arguments) ?
                stdin :
                Car(arguments)->data.input_port.stream;
-    SchemeObject* result = Read(in);
+    SchemeObject* result = Reader(in);
     return (result == NULL) ? EOF_OBJ : result;
 }
 
@@ -171,7 +171,7 @@ WriteProcedure(SchemeObject* arguments)
                 stdout :
                 Car(arguments)->data.output_port.stream;
 
-    Write(out, exp);
+    Writer(out, exp);
     fflush(out);
     return OkSymbol;
 }
@@ -180,7 +180,7 @@ extern SchemeObject*
 ErrorProcedure(SchemeObject* arguments)
 {
     while (!IsTheEmptyList(arguments)) {
-        Write(stderr, Car(arguments));
+        Writer(stderr, Car(arguments));
         fprintf(stderr, " ");
         arguments = Cdr(arguments);
     }

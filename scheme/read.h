@@ -4,6 +4,6 @@
 #include <bits/types/FILE.h>
 #include "object.h"
 
-extern SchemeObject* Read(FILE* in);
+extern SchemeObject* Reader(FILE* in);
 
 #endif //SCHEME_C_READ_H

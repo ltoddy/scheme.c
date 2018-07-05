@@ -8,7 +8,7 @@ WritePair(FILE* out, SchemeObject* pair)
 {
     SchemeObject* car = Car(pair);
     SchemeObject* cdr = Cdr(pair);
-    Write(out, car);
+    Writer(out, car);
     if (cdr->type == PAIR) {
         fprintf(out, " ");
         WritePair(out, cdr);
@@ -16,12 +16,12 @@ WritePair(FILE* out, SchemeObject* pair)
         return;
     } else {
         fprintf(out, " . ");
-        Write(out, cdr);
+        Writer(out, cdr);
     }
 }
 
 extern void
-Write(FILE* out, SchemeObject* obj)
+Writer(FILE* out, SchemeObject* obj)
 {
     char c;
     char* str;

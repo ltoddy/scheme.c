@@ -31,11 +31,11 @@ int main()
 
     for (;;) {
         printf("> ");
-        exp = Read(stdin);
+        exp = Reader(stdin);
         if (exp == NULL) {
             break;
         }
-        Write(stdout, Eval(exp, TheGlobalEnvironment));
+        Writer(stdout, Eval(exp, TheGlobalEnvironment));
         printf("\n");
     }
 

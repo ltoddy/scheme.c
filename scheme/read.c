@@ -120,7 +120,7 @@ ReadPair(FILE* in)
     }
     ungetc(c, in);
 
-    car = Read(in);
+    car = Reader(in);
     SkipWhitespace(in);
 
     c = getc(in);
@@ -130,7 +130,7 @@ ReadPair(FILE* in)
             fprintf(stderr, "dot not followed by delimiter.\n");
             exit(1);
         }
-        cdr = Read(in);
+        cdr = Reader(in);
         SkipWhitespace(in);
         c = getc(in);
         if (c != ')') {
@@ -146,7 +146,7 @@ ReadPair(FILE* in)
 }
 
 extern SchemeObject*
-Read(FILE* in)
+Reader(FILE* in)
 {
     int c = 0;
     short sign = 1;
@@ -232,7 +232,7 @@ Read(FILE* in)
     } else if (c == '(') { /* read the empty list or pair */
         return ReadPair(in);
     } else if (c == '\'') { /* read quoted expression */
-        return Cons(QuoteSymbol, Cons(Read(in), TheEmptyList));
+        return Cons(QuoteSymbol, Cons(Reader(in), TheEmptyList));
     } else if (c == EOF) {
         return NULL;
     } else {
