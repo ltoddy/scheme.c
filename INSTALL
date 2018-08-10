@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 cmake .
 make
 sudo cp ./bin/scheme /usr/local/bin/
