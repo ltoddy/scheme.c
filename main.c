@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
 #include "scheme/write.h"
 #include "scheme/eval.h"
 #include "scheme/read.h"
@@ -14,6 +16,13 @@ void prompt()
 
 int main()
 {
+    char* basedir;
+    if ((basedir = getcwd(NULL, 0)) == NULL) {
+        exit(-1);
+    }
+    char builtin[128];
+    sprintf(builtin, "%s/%s", basedir, "lib/builtin.scm");
+
     SchemeObject* exp;
     InitScheme();
 
@@ -21,8 +30,7 @@ int main()
     stdlib->type = PAIR;
     stdlib->data.pair.car = AllocObject();
     stdlib->data.pair.car->type = STRING;
-    stdlib->data.pair.car->data.string.value = "lib/builtin.scm";
-
+    stdlib->data.pair.car->data.string.value = builtin;
     stdlib->data.pair.cdr = TheEmptyList;
 
     LoadProcedure(stdlib);
@@ -38,6 +46,9 @@ int main()
         Writer(stdout, Eval(exp, TheGlobalEnvironment));
         printf("\n");
     }
+
+    free(basedir);
+    free(exp);
 
     return 0;
 }
