@@ -1,5 +1,10 @@
 <div align="center">
     <h1>A Scheme interpreter.</h1>
+    <p>
+      <a href="https://github.com/ltoddy/scheme.c/blob/master/LICENSE"><img src="https://img.shields.io/github/license/ltoddy/scheme.c.svg" alt="LICENSE"></a>
+      <a href="https://github.com/ltoddy/scheme.c/stargazers"><img src="https://img.shields.io/github/stars/ltoddy/scheme.c.svg" alt="stargazers"></a>
+      <a href="https://github.com/ltoddy/scheme.c/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/release-v0.1.0-green.svg" alt="release"></a>
+    </p>
     <img src="assets/illya.gif"/>
 </div>
 
