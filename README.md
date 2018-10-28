@@ -97,6 +97,8 @@ ok
 
 ### Require
 
+gcc
+
 cmake version >= 3.10
 
 如果你的cmake版本低,请去修改*CMakeLists.txt*文件第一行的需求版本.
