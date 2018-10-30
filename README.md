@@ -5,7 +5,6 @@
       <a href="https://github.com/ltoddy/scheme.c/stargazers"><img src="https://img.shields.io/github/stars/ltoddy/scheme.c.svg" alt="stargazers"></a>
       <a href="https://github.com/ltoddy/scheme.c/releases/tag/v0.1.0"><img src="https://img.shields.io/badge/release-v0.1.0-green.svg" alt="release"></a>
     </p>
-    <img src="assets/illya.gif"/>
 </div>
 
 *来源SICP(Structure and Interpretation of Computer Programs)第四章开始的元解释器的教学*
