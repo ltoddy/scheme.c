@@ -90,6 +90,25 @@ ok
 > ^C
 ```
 
+### 支持一些函数式feature
+
+```
+> (define (currying-sum x)
+      (lambda (y) (+ x y)))
+ok
+> ((currying-sum 10) 20)
+30
+> (define (length lst)
+    (define (iter lst count)
+      (if (null? lst)      
+          count
+          (iter (cdr lst) (+ count 1))))
+    (iter lst 0))
+ok
+> (length '(1 2 3))
+3
+```
+
 ### Install:
 
 > sudo ./INSTALL
