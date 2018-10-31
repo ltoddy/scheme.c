@@ -26,4 +26,5 @@ add_executable(
         scheme/let.c         scheme/let.h
         scheme/apply.c       scheme/apply.h
         scheme/io.c          scheme/io.h
+        scheme/gc.c          scheme/gc.h
 )

@@ -6,6 +6,8 @@
 #include "type.h"
 
 typedef struct SchemeObject {
+    unsigned short ref_count;
+
     SchemeObjectType type;
     union {
         struct {
