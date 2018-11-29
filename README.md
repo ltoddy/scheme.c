@@ -141,7 +141,40 @@ cmake version >= 3.10
 - 垃圾自动回收机制, gc模块
 - r5rs的支持
 - r6rs的支持
-- 解释文件 e.g. ->  scheme -f main.ss
+- 解释文件 e.g. ->  scheme -f main.scm
 - 添加m4,自循环编译文件
 - 用户自定义数据结构(struct关键字)
 - 宏(由于lisp的同相性,所有才能有宏这个东西,宏在编译期转换成lisp代码)
+
+### 本解释器built-in的结构:
+
+在 `scheme/builtin.c` (在`void PopulateEnvironment(SchemeObject* env)`中) 中, 我定义了一个宏:
+
+```c
+#define ADD_PRIMITIVE(scheme_name, c_name) \
+    DefineVariable(MakeSymbol(scheme_name), MakePrimitiveProc(c_name), env);
+```
+
+然后有一大堆对这个宏的使用.
+
+除了这部分, 还有在`main.c`中
+
+```c
+SchemeObject* stdlib = AllocObject();
+   ...
+LoadProcedure(stdlib);
+```
+
+这会加载 `lib/builtin.scm` 中定义的函数.
+
+未来如果要扩展更大的标准库, 可以将 `lib/builtin.scm` 改为例如:
+
+```
+(load "string")
+
+(load "char")
+
+(load "io")
+
+....
+```
