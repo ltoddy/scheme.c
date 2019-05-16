@@ -37,50 +37,89 @@ SchemeObject* EOF_OBJ = NULL;
 static SchemeObject*
 AddProcedure(SchemeObject* arguments) /* (+ ...) */
 {
-    long result = 0;
+    if (IsFixnum(Car(arguments))) {
+        long result = 0;
 
-    while (!IsTheEmptyList(arguments)) {
-        result += (Car(arguments))->data.fixnum.value;
-        arguments = Cdr(arguments);
+        while (!IsTheEmptyList(arguments)) {
+            result += (Car(arguments))->data.fixnum.value;
+            arguments = Cdr(arguments);
+        }
+        return MakeFixnum(result);
+    } else {
+        double result = 0;
+
+        while (!IsTheEmptyList(arguments)) {
+            result += (Car(arguments))->data.floatnum.value;
+            arguments = Cdr(arguments);
+        }
+        return MakeFloatnum(result);
     }
-    return MakeFixnum(result);
 }
 
 static SchemeObject*
 SubProcedure(SchemeObject* arguments) /* (- ...) */
 {
-    long result = (Car(arguments))->data.fixnum.value;
+    if (IsFixnum(Car(arguments))) {
+        long result = (Car(arguments))->data.fixnum.value;
 
-    while (!IsTheEmptyList(arguments = Cdr(arguments))) {
-        result -= (Car(arguments))->data.fixnum.value;
+        while (!IsTheEmptyList(arguments = Cdr(arguments))) {
+            result -= (Car(arguments))->data.fixnum.value;
+        }
+        return MakeFixnum(result);
+    } else {
+        double result = (Car(arguments))->data.floatnum.value;
+
+            while (!IsTheEmptyList(arguments = Cdr(arguments))) {
+                result -= (Car(arguments))->data.floatnum.value;
+            }
+        return MakeFloatnum(result);
     }
-    return MakeFixnum(result);
 }
 
 static SchemeObject*
 MulProcedure(SchemeObject* arguments) /* (* ...) */
 {
-    long result = 1;
+    if (IsFixnum(Car(arguments))) {
+        long result = 1;
 
-    while (!IsTheEmptyList(arguments)) {
-        result *= (Car(arguments))->data.fixnum.value;
-        arguments = Cdr(arguments);
+        while (!IsTheEmptyList(arguments)) {
+            result *= (Car(arguments))->data.fixnum.value;
+            arguments = Cdr(arguments);
+        }
+        return MakeFixnum(result);
+    } else {
+        double result = 1;
+
+        while (!IsTheEmptyList(arguments)) {
+            result *= (Car(arguments))->data.floatnum.value;
+            arguments = Cdr(arguments);
+        }
+        return MakeFloatnum(result);
     }
-    return MakeFixnum(result);
 }
 
 static SchemeObject*
 QuotientProcedure(SchemeObject* arguments) /* (quotient ...) */
 {
-    return MakeFixnum((Car(arguments))->data.fixnum.value /
-                      (CADR(arguments))->data.fixnum.value);
+    if (IsFixnum(Car(arguments))) {
+        return MakeFixnum((Car(arguments))->data.fixnum.value /
+                          (CADR(arguments))->data.fixnum.value);
+    } else {
+        return MakeFloatnum((Car(arguments))->data.floatnum.value /
+                         (CADR(arguments))->data.floatnum.value);
+    }
 }
 
 static SchemeObject*
 RemainderProcedure(SchemeObject* arguments) /* (remainder ...) */
 {
-    return MakeFixnum((Car(arguments))->data.fixnum.value %
-                      (CADR(arguments))->data.fixnum.value);
+    if (IsFixnum(Car(arguments))) {
+        return MakeFixnum((Car(arguments))->data.fixnum.value %
+                          (CADR(arguments))->data.fixnum.value);
+    } else {
+        fprintf(stderr, "invalid operation on floating numbers.\n");
+        exit(1);
+    }
 }
 
 static SchemeObject*

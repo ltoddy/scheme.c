@@ -33,6 +33,21 @@ IsFixnum(SchemeObject* obj)
     return obj->type == FIXNUM;
 }
 
+extern SchemeObject*
+MakeFloatnum(double value)
+{
+    SchemeObject* obj = AllocObject();
+    obj->type = FLOATNUM;
+    obj->data.floatnum.value = value;
+    return obj;
+}
+
+extern char
+IsFloatnum(SchemeObject* obj)
+{
+    return obj->type == FLOATNUM;
+}
+
 extern char
 IsTheEmptyList(SchemeObject* obj)
 {

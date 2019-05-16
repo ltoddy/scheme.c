@@ -20,6 +20,9 @@ typedef struct SchemeObject {
             long value;
         } fixnum;
         struct {
+            double value;
+        } floatnum;
+        struct {
             char value;
         } character;
         struct {
@@ -60,6 +63,10 @@ extern SchemeObject* AllocObject();
 extern SchemeObject* MakeFixnum(long value);
 
 extern char IsFixnum(SchemeObject* obj);
+
+extern SchemeObject* MakeFloatnum(double value);
+
+extern char IsFloatnum(SchemeObject* obj);
 
 extern char IsTheEmptyList(SchemeObject* obj);
 
