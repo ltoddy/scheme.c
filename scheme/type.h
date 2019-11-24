@@ -4,6 +4,7 @@
 typedef enum {
     BOOLEAN,
     FIXNUM,
+    FLOATNUM,
     CHARACTER,
     STRING,
     THE_EMPTY_LIST,

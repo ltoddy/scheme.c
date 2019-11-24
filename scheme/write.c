@@ -39,6 +39,9 @@ Writer(FILE* out, SchemeObject* obj)
         case FIXNUM:
             fprintf(out, "%ld", obj->data.fixnum.value);
             break;
+        case FLOATNUM:
+            fprintf(out, "%lf", obj->data.floatnum.value);
+            break;
         case CHARACTER:
             c = obj->data.character.value;
             fprintf(out, "#\\");

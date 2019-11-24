@@ -41,6 +41,7 @@ IsSelfEvaluating(SchemeObject* exp)
 {
     return IsBoolean(exp) ||
            IsFixnum(exp) ||
+           IsFloatnum(exp) ||
            IsCharacter(exp) ||
            IsString(exp);
 }

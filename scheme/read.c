@@ -151,6 +151,8 @@ Reader(FILE* in)
     int c = 0;
     short sign = 1;
     long num = 0;
+    short floatFlag = 0;
+    double floatnum = 0;
 
 #define MAX_BUFFER 1024
     char buffer[MAX_BUFFER];
@@ -180,10 +182,20 @@ Reader(FILE* in)
         while (isdigit(c = getc(in))) {
             num = (num * 10) + (c - '0');
         }
+        if (c == '.') {
+            floatFlag = 1;
+            double d;
+            for (d = 0.1; isdigit(c = getc(in)); d/=10) {
+                floatnum += (c - '0') * d;
+            }
+        }
         num *= sign;
         if (IsDelimiter(c)) {
             ungetc(c, in);
-            return MakeFixnum(num);
+            if (floatFlag)
+                return MakeFloatnum(num + floatnum);
+            else
+                return MakeFixnum(num);
         } else {
             fprintf(stderr, "number not followed by delimiter.\n");
             exit(1);
