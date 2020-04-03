@@ -2,7 +2,7 @@
 #define SCHEME_C_OBJECT_H
 
 #include <stddef.h>
-#include <bits/types/FILE.h>
+#include <stdio.h>
 #include "type.h"
 
 typedef struct SchemeObject {
